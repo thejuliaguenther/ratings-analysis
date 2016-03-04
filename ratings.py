@@ -16,14 +16,19 @@ ratings = parts.map(lambda p: (p[0], p[1], p[2], p[3].strip()))
 # The schema is encoded in a string.
 ratingsSchemaString = "userId movieId rating timestamp"
 
-fields = [StructField(field_name, StringType(), True) for field_name in ratingsSchemaString.split()]
-schema = StructType(fields)
+ratingsFields = [StructField(fieldName, StringType(), True) for fieldName in ratingsSchemaString.split()]
+ratingsSchema = StructType(ratingsFields)
 
 # Apply the schema to the RDD.
-schemaRatings = sqlContext.createDataFrame(ratings, schema)
+schemaRatings = sqlContext.createDataFrame(ratings, ratingsSchema)
 
 # Register the DataFrame as a table.
 schemaRatings.registerTempTable("ratings")
+
+# movieLines = sc.textFile("./ml-20m/movies.csv")
+# parts = ratingsLines.map(lambda l: l.split(","))
+# ratings = parts.map(lambda p: (p[0], p[1], p[2].strip()))
+
 
 # SQL can be run over DataFrames that have been registered as a table.
 results = sqlContext.sql("SELECT userId FROM ratings")
