@@ -27,8 +27,17 @@ moviesDF = sqlContext.read.format('com.databricks.spark.csv').options(quote="\""
 moviesDF.registerTempTable("movies")
 
 
-results = sqlContext.sql("SELECT * FROM movies")
+tagsSchema = StructType([ \
+    StructField("userId", StringType(), True), \
+    StructField("movieId", StringType(), True), \
+    StructField("tag", StringType(), True), \
+    StructField("timestamp", StringType(), True)])
 
-types = results.map(lambda p:"Movie ID "+p.movieId+ " Genres: " + p.genres)
-for genre in types.collect():
-  print(genre)
+tagsDF = sqlContext.read.format('com.databricks.spark.csv').options(quote="\"").load('./ml-20m/tags.csv', schema=tagsSchema)
+tagsDF.registerTempTable("tags")
+
+
+results = sqlContext.sql("SELECT * FROM tags")
+types = results.map(lambda p:"userId ID "+p.userId+ " movie id "+p.movieId+ " Tag: " + p.tag)
+for tag in types.collect():
+  print(tag)
