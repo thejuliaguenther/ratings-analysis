@@ -1,6 +1,9 @@
 from pyspark.sql import SQLContext
 from pyspark.sql.types import *
 from pyspark import SparkConf, SparkContext
+from pyspark.mllib.clustering import KMeans, KMeansModel
+from numpy import array
+from math import sqrt
 
 conf = SparkConf().setMaster("local").setAppName("MovieRatingsApp")
 sc = SparkContext(conf = conf)
@@ -9,9 +12,9 @@ sc = SparkContext(conf = conf)
 sqlContext = SQLContext(sc)
 
 ratingsSchema = StructType([ \
-    StructField("userId", StringType(), True), \
-    StructField("movieId", StringType(), True), \
-    StructField("rating", StringType(), True), \
+    StructField("userId", LongType(), True), \
+    StructField("movieId", LongType(), True), \
+    StructField("rating", LongType(), True), \
     StructField("timestamp", StringType(), True)])
 
 # Load a text file and create a new DataFrame from the text file 
@@ -37,7 +40,45 @@ tagsDF = sqlContext.read.format('com.databricks.spark.csv').options(quote="\"").
 tagsDF.registerTempTable("tags")
 
 
-results = sqlContext.sql("SELECT * FROM tags")
-types = results.map(lambda p:"userId ID "+p.userId+ " movie id "+p.movieId+ " Tag: " + p.tag)
-for tag in types.collect():
-  print(tag)
+tagLines = sqlContext.sql("SELECT userId, movieId, tag FROM tags")
+tagLinesRdd = tagLines.rdd
+# for tag in tagLinesRdd.collect():
+#     print type(tag)
+
+
+mappedTags = tagLinesRdd.map(lambda x: (str(x.movieId),[str(x.tag)]))
+# combinedTags = mappedTags.countByValue()
+# arr = mappedTags.take(20)
+# for i in arr:
+#     print i
+
+combinedTags = mappedTags.reduceByKey(lambda a,b: a+b)
+arr = combinedTags.take(20)
+for i in arr:
+    print i
+
+# reducedTags = mappedTags.reduceByKey(lambda x,y: x.append(y))
+# arr = reducedTags.take(20)
+# for i in arr:
+#     print i
+
+# print combinedTags
+
+# tagLines.groupBy(tagLines.movieId)
+# tags = tagLines.map(lambda p:"userId ID:"+p.userId+ " movie id "+p.movieId+ " Tag: " + p.tag)
+# for tag in tags.co
+
+
+
+# clusters = KMeans.train(types, 2, maxIterations=10,
+#         runs=10, initializationMode="random")
+
+# print clusters
+
+# Evaluate clustering by computing Within Set Sum of Squared Errors
+# def error(point):
+#     center = clusters.centers[clusters.predict(point)]
+#     return sqrt(sum([x**2 for x in (point - center)]))
+
+# WSSSE = parsedData.map(lambda point: error(point)).reduce(lambda x, y: x + y)
+# print("Within Set Sum of Squared Error = " + str(WSSSE))
