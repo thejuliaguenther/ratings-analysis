@@ -4,6 +4,7 @@ from pyspark import SparkConf, SparkContext
 from pyspark.mllib.clustering import KMeans, KMeansModel
 from numpy import array
 from math import sqrt
+import json
 
 conf = SparkConf().setMaster("local").setAppName("MovieRatingsApp")
 sc = SparkContext(conf = conf)
@@ -47,10 +48,10 @@ tagLinesRdd = tagLines.rdd
 mappedTags = tagLinesRdd.map(lambda x: (str(x.movieId),[str(x.tag)]))
 
 combinedTags = mappedTags.reduceByKey(lambda a,b: a+b)
-arr = combinedTags.take(20)
-# for i in arr:
-#     print i
-print type(arr)
+tagDict = combinedTags.collectAsMap()
+
+tagJSON = json.dumps(tagDict)
+print tagJSON
 
 
 # clusters = KMeans.train(types, 2, maxIterations=10,
