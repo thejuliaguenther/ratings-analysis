@@ -52,7 +52,7 @@ tagDict = combinedTags.collectAsMap()
 
 tagFile = open('tags.json', 'w')
 tagJSON = json.dumps(tagDict, tagFile)
-print tagJSON
+
 
 
 # clusters = KMeans.train(types, 2, maxIterations=10,
