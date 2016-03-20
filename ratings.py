@@ -42,32 +42,15 @@ tagsDF.registerTempTable("tags")
 
 tagLines = sqlContext.sql("SELECT userId, movieId, tag FROM tags")
 tagLinesRdd = tagLines.rdd
-# for tag in tagLinesRdd.collect():
-#     print type(tag)
 
 
 mappedTags = tagLinesRdd.map(lambda x: (str(x.movieId),[str(x.tag)]))
-# combinedTags = mappedTags.countByValue()
-# arr = mappedTags.take(20)
-# for i in arr:
-#     print i
 
 combinedTags = mappedTags.reduceByKey(lambda a,b: a+b)
 arr = combinedTags.take(20)
-for i in arr:
-    print i
-
-# reducedTags = mappedTags.reduceByKey(lambda x,y: x.append(y))
-# arr = reducedTags.take(20)
 # for i in arr:
 #     print i
-
-# print combinedTags
-
-# tagLines.groupBy(tagLines.movieId)
-# tags = tagLines.map(lambda p:"userId ID:"+p.userId+ " movie id "+p.movieId+ " Tag: " + p.tag)
-# for tag in tags.co
-
+print type(arr)
 
 
 # clusters = KMeans.train(types, 2, maxIterations=10,
