@@ -15,7 +15,7 @@ sqlContext = SQLContext(sc)
 ratingsSchema = StructType([ \
     StructField("userId", StringType(), True), \
     StructField("movieId", StringType(), True), \
-    StructField("rating",  StringType(), True), \
+    StructField("rating",  FloatType(), True), \
     StructField("timestamp", StringType(), True)])
 
 # Load a text file and create a new DataFrame from the text file 
