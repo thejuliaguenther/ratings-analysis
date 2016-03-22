@@ -13,9 +13,9 @@ sc = SparkContext(conf = conf)
 sqlContext = SQLContext(sc)
 
 ratingsSchema = StructType([ \
-    StructField("userId", LongType(), True), \
-    StructField("movieId", LongType(), True), \
-    StructField("rating", LongType(), True), \
+    StructField("userId", StringType(), True), \
+    StructField("movieId", StringType(), True), \
+    StructField("rating",  StringType(), True), \
     StructField("timestamp", StringType(), True)])
 
 # Load a text file and create a new DataFrame from the text file 
@@ -53,6 +53,19 @@ tagDict = combinedTags.collectAsMap()
 tagFile = open('tags.json', 'w')
 tagJSON = json.dumps(tagDict, tagFile)
 
+ratingLines = sqlContext.sql("SELECT userId, movieId, rating FROM ratings")
+ratingLinesRdd = ratingLines.rdd
+
+mappedRatings = ratingLinesRdd.map(lambda x: (str(x.userId), [(str(x.movieId),float(x.rating))]))
+
+#Map each user to all of the movies rated by the user and the movie id of each movie
+
+combinedRatings = mappedRatings.reduceByKey(lambda a,b: a+b)
+print combinedRatings.take(20)
+
+#Create an RDD for movie ratings by user
+#Compare similar movies 
+#maybe do kmeans 
 
 
 # clusters = KMeans.train(types, 2, maxIterations=10,
