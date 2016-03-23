@@ -2,7 +2,7 @@ from pyspark.sql import SQLContext
 from pyspark.sql.types import *
 from pyspark import SparkConf, SparkContext
 from pyspark.mllib.clustering import KMeans, KMeansModel
-from numpy import array
+import numpy as np
 from math import sqrt
 import json 
 
@@ -13,8 +13,8 @@ sc = SparkContext(conf = conf)
 sqlContext = SQLContext(sc)
 
 ratingsSchema = StructType([ \
-    StructField("userId", StringType(), True), \
-    StructField("movieId", StringType(), True), \
+    StructField("userId", LongType(), True), \
+    StructField("movieId", LongType(), True), \
     StructField("rating",  FloatType(), True), \
     StructField("timestamp", StringType(), True)])
 
@@ -56,20 +56,33 @@ tagJSON = json.dumps(tagDict, tagFile)
 ratingLines = sqlContext.sql("SELECT userId, movieId, rating FROM ratings")
 ratingLinesRdd = ratingLines.rdd
 
-mappedRatings = ratingLinesRdd.map(lambda x: (str(x.userId), [(str(x.movieId),float(x.rating))]))
+
+# 
+
+# mappedRatings = ratingLinesRdd.map(lambda x: (str(x.userId), [(str(x.movieId),float(x.rating))]))
 
 #Map each user to all of the movies rated by the user and the movie id of each movie
 
+mappedRatings = ratingLinesRdd.map(lambda x: (long(x.userId), [(long(x.movieId),float(x.rating))]))
 combinedRatings = mappedRatings.reduceByKey(lambda a,b: a+b)
-print combinedRatings.take(20)
+ratingsDict = combinedRatings.collectAsMap()
+# print combinedRatings.take(20)
+
+#Create a numpy array of all of the user ids, movie ids, and ratings 
+#
+#Each rating is a separate line 
+
+ratingsData = ratingLinesRdd.map(lambda x: np.fromstring(str(x), dtype=np.float64, sep=" "))
+
 
 #Create an RDD for movie ratings by user
 #Compare similar movies 
 #maybe do kmeans 
 
 
-# clusters = KMeans.train(types, 2, maxIterations=10,
-#         runs=10, initializationMode="random")
+clusters = KMeans.train(ratingsData, 4, maxIterations=10,
+        runs=10, initializationMode="random")
+print type(clusters)
 
 # print clusters
 
