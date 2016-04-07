@@ -51,27 +51,31 @@ mappedTags = tagLinesRdd.map(lambda x: (str(x.movieId),[str(x.tag)]))
 combinedTags = mappedTags.reduceByKey(lambda a,b: a+b)
 tagDict = combinedTags.collectAsMap()
 
+
 # Save the tags to a JSON file 
 tagFile = open('tags.json', 'w')
-tagJSON = json.dumps(tagDict, tagFile)
+tagJSON = json.dump(tagDict, tagFile)
 
-ratingLines = sqlContext.sql("SELECT userId, movieId, rating FROM ratings")
-ratingLinesRdd = ratingLines.rdd
+# ratingLines = sqlContext.sql("SELECT userId, movieId, rating FROM ratings")
+# ratingLinesRdd = ratingLines.rdd
 
 # Map each user to all of the movies rated by the user and the movie id of each movie
-mappedRatings = ratingLinesRdd.map(lambda x: (long(x.userId), [(long(x.movieId),float(x.rating))]))
-combinedRatings = mappedRatings.reduceByKey(lambda a,b: a+b)
-ratingsDict = combinedRatings.collectAsMap()
+# mappedRatings = ratingLinesRdd.map(lambda x: (long(x.userId), [(long(x.movieId),float(x.rating))]))
+# combinedRatings = mappedRatings.reduceByKey(lambda a,b: a+b)
+# ratingsDict = combinedRatings.collectAsMap()
 
-# Create a numpy array of all of the user ids, movie ids, and ratings 
-# Each rating is a separate line 
-ratingsData = ratingLinesRdd.map(lambda x: np.fromstring(str(x), dtype=np.float64, sep=" "))
+# # Create a numpy array of all of the user ids, movie ids, and ratings 
+# # Each rating is a separate line 
+# ratingsData = ratingLinesRdd.map(lambda x: np.fromstring(str(x), dtype=np.float64, sep=" "))
 
-# Perform the KMeans clustering algorithm on the movie ratings data
-clusters = KMeans.train(ratingsData, 4, maxIterations=10,
-        runs=10, initializationMode="random")
+# # Perform the KMeans clustering algorithm on the movie ratings data
+# clusters = KMeans.train(ratingsData, 4, maxIterations=10,
+#         runs=10, initializationMode="random")
+
+# print "CLUSTERS!!!!"
+# print type(clusters)
 
 # Save the clusters to a model and load it
-clusters.save(sc, "RatingsModelPath")
-sameModel = KMeansModel.load(sc, "RatingsModelPath")
+# clusters.save(sc, "RatingsModelPath")
+# sameModel = KMeansModel.load(sc, "RatingsModelPath")
  
