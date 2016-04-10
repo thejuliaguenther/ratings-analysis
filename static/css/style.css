@@ -1,0 +1,13 @@
+.container{
+    width: 100%;
+}
+.container-fluid{
+    width: 100%;
+}
+
+.intro-header{
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 50px;
+}

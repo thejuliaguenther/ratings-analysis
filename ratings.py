@@ -56,6 +56,9 @@ tagDict = combinedTags.collectAsMap()
 tagFile = open('tags.json', 'w')
 tagJSON = json.dump(tagDict, tagFile)
 
+def get_movie_by_id():
+    
+
 # ratingLines = sqlContext.sql("SELECT userId, movieId, rating FROM ratings")
 # ratingLinesRdd = ratingLines.rdd
 
