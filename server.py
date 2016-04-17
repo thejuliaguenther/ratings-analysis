@@ -17,6 +17,10 @@ def index():
 def display_movies():
     return render_template("movie.html")
 
+@app.route('/clusters', methods=["GET"])
+def display_clusters():
+    return render_template("clusters.html")
+
 if __name__ == "__main__":
     PORT = int(os.environ.get("PORT", 5000))
     DEBUG = "NO_DEBUG" not in os.environ
