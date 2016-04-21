@@ -12,6 +12,36 @@
     margin-bottom: 50px;
 }
 
-.page-navbar a{
+/*.page-navbar .nav  li a {
+    padding: 20px;
     color: #404040;
-}
+}*/
+
+/*@media only screen and (min-width: 768px) {*/
+  .page-navbar {
+    background: #404040;
+    border-bottom: 1px solid transparent;
+    z-index: 1;
+    height: 20px;
+    margin-bottom: 50px;
+  }
+  .page-navbar .navbar-brand {
+    color: white;
+    padding: 10px;
+  }
+  .page-navbar .navbar-brand:hover,
+  .page-navbar.navbar-brand:focus {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .page-navbar .nav li a {
+    color: white;
+    padding: 10px;
+  }
+  .page-navbar .nav li a:hover,
+  .page-navbar .nav li a:focus {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .template-container{
+    margin-top: 50px;
+  }
+/*}*/
