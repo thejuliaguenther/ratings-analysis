@@ -5,7 +5,7 @@
 
 <ul>
   {% for movie in movie_list %}
-   <li>{{movie}}</li>
+   <li><a href="/movie_detail/{{movie[0]}}">{{movie[1]}}</li>
   {% endfor %}
 </table>
 

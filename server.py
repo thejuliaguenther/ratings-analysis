@@ -26,8 +26,12 @@ def display_movies():
     movie_list = []
     for i in movie_json:
         value = r1.get(str(i))
-        movie_list.append(value)
+        movie_list.append((i,value))
     return render_template("movie.html", movie_list=movie_list)
+
+@app.route('/movie_detail/<int:movie_id>')
+def show_movie_tags():
+    pass
 
 @app.route('/clusters', methods=["GET"])
 def display_clusters():
