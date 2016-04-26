@@ -51,12 +51,26 @@ mappedTags = tagLinesRdd.map(lambda x: (str(x.movieId),[str(x.tag)]))
 combinedTags = mappedTags.reduceByKey(lambda a,b: a+b)
 tagDict = combinedTags.collectAsMap()
 
+# print tagDict
 
-# Save the tags to a JSON file 
-tagFile = open('tags.json', 'w')
-tagJSON = json.dump(tagDict, tagFile)
+movieRows = sqlContext.sql("SELECT movieId, title from movies")
+movieRowsRdd = movieRows.rdd
 
-def get_movie_by_id():
+mappedMovies = movieRowsRdd.map(lambda x: (str(x.movieId),str(x.title)))
+movieDict = mappedMovies.collectAsMap()
+
+for line in movieDict:
+    print line +":"+movieDict[line]
+
+
+
+# # Save the tags to a JSON file 
+# tagFile = open('tags.json', 'w')
+# tagJSON = json.dump(tagDict, tagFile)
+
+# def get_movie_by_id():
+#     for tag in tagDict:
+
     
 
 # ratingLines = sqlContext.sql("SELECT userId, movieId, rating FROM ratings")
