@@ -62,14 +62,14 @@ movieDict = mappedMovies.collectAsMap()
 for line in movieDict:
     print line +":"+movieDict[line]
 
+movieFile = open('movies.json', 'w')
+movieJSON =  json.dump(movieDict, movieFile)
 
 
 # # Save the tags to a JSON file 
-# tagFile = open('tags.json', 'w')
-# tagJSON = json.dump(tagDict, tagFile)
+tagFile = open('tags.json', 'w')
+tagJSON = json.dump(tagDict, tagFile)
 
-# def get_movie_by_id():
-#     for tag in tagDict:
 
     
 
