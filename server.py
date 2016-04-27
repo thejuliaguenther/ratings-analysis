@@ -30,15 +30,12 @@ def display_movies():
         movie_list.append((i,value))
     return render_template("movie.html", movie_list=movie_list)
 
-@app.route('/movie_detail/<string:movie_id>')
+@app.route('/movie_detail/<string:movie_id>', methods=["GET"])
 def show_movie_tags(movie_id):
     movie_title = r1.get(str(movie_id))
     movie_tags = r2.get(str(movie_id))
 
-    print type(movie_tags)
-
     unique_tags = remove_duplicate_tags(movie_tags)
-    print unique_tags
 
     return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags)
 

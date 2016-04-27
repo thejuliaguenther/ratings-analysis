@@ -1,6 +1,8 @@
 from sets import Set 
 
 def remove_duplicate_tags(lst):
+    """This method cleans the tags data from redis for each movie """
+
     split_lst = lst.split(",")
     seen = Set()
     result = []
