@@ -30,8 +30,10 @@ def display_movies():
     return render_template("movie.html", movie_list=movie_list)
 
 @app.route('/movie_detail/<int:movie_id>')
-def show_movie_tags():
-    pass
+def show_movie_tags(movie_id):
+    movie_title = r1.get(str(movie_id))
+
+    return render_template("movie_detail.html", movie_title=movie_title)
 
 @app.route('/clusters', methods=["GET"])
 def display_clusters():
