@@ -18,8 +18,6 @@ tag_data = open("tags.json").read()
 tags_to_load = tag_data.encode('ascii', 'ignore')
 tag_json = json.loads(tags_to_load)
 
-
-# print tag_json
 for movie in tag_json:
     tag_list = []
     for tag in tag_json[movie]:
