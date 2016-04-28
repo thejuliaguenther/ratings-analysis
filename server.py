@@ -39,6 +39,10 @@ def show_movie_tags(movie_id):
 
     return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags)
 
+# @app.route('/movie_tags.json')
+# def create_movie_tags_json():
+    
+
 @app.route('/clusters', methods=["GET"])
 def display_clusters():
     return render_template("clusters.html")

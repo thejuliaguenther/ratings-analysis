@@ -396,9 +396,10 @@
 
   var fill = d3.scale.category20();
 
-  d3.layout.cloud().size([300, 300])
-      .words([
-        ".NET", "Silverlight", "jQuery", "CSS3", "HTML5", "JavaScript", "SQL","C#"].map(function(d) {
+  var movie_tags = {{ unique_tags|tojson }};
+
+  d3.layout.cloud().size([400, 400])
+      .words(movie_tags.map(function(d) {
         return {text: d, size: 10 + Math.random() * 50};
       }))
       .rotate(function() { return ~~(Math.random() * 2) * 90; })
@@ -409,8 +410,8 @@
 
   function draw(words) {
     d3.select("body").append("svg")
-        .attr("width", 300)
-        .attr("height", 300)
+        .attr("width", 800)
+        .attr("height", 800)
       .append("g")
         .attr("transform", "translate(150,150)")
       .selectAll("text")
