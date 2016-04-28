@@ -2,10 +2,11 @@
 {% block content %}
 
 <h1>{{movie_title}}</h1>
-{% for tag in unique_tags %}
+<!-- {% for tag in unique_tags %}
     <li>{{tag}}</li>
 
-{% endfor %}
+{% endfor %} -->
+<div id="word-cloud"></div>
 
 <script>
 // Word cloud layout by Jason Davies, http://www.jasondavies.com/word-cloud/
@@ -398,9 +399,9 @@
 
   var movie_tags = {{ unique_tags|tojson }};
 
-  d3.layout.cloud().size([400, 400])
+  d3.layout.cloud().size([800, 800])
       .words(movie_tags.map(function(d) {
-        return {text: d, size: 10 + Math.random() * 50};
+        return {text: d, size: 7 + Math.random() * 60};
       }))
       .rotate(function() { return ~~(Math.random() * 2) * 90; })
       .font("Impact")
@@ -409,15 +410,15 @@
       .start();
 
   function draw(words) {
-    d3.select("body").append("svg")
-        .attr("width", 800)
-        .attr("height", 800)
+    d3.select("#word-cloud").append("svg")
+        .attr("width", 1000)
+        .attr("height", 1000)
       .append("g")
         .attr("transform", "translate(150,150)")
       .selectAll("text")
         .data(words)
       .enter().append("text")
-        .style("font-size", function(d) { return d.size + "px"; })
+        .style("font-size", function(d) { return (d.size)+ "px"; })
         .style("font-family", "Impact")
         .style("fill", function(d, i) { return fill(i); })
         .attr("text-anchor", "middle")
