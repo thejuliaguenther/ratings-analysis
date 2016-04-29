@@ -25,5 +25,11 @@ for movie in tag_json:
 
     r2.set(str(movie), tag_list)
 
+# Maps movie title to movieis; this can be done as all movie titles unique 
+r3 = redis.StrictRedis(host='localhost', port=6379, db=2)
+
+for i in movie_json:
+    r3.set(str(movie_json[line]), str([i])
+
 
 

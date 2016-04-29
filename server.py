@@ -4,7 +4,7 @@ import redis
 
 import json 
 
-from store import r1,r2, movie_json,tag_json
+from store import r1,r2, r3, movie_json,tag_json
 
 from app import remove_duplicate_tags
 
@@ -39,9 +39,16 @@ def show_movie_tags(movie_id):
 
     return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags)
 
+# @app.route('/find_movie', methods=["POST"])
+#     def find_movie():
+#         movie_name = request.form.get("movie-name")
+
+#         if 
+
+
 # @app.route('/movie_tags.json')
 # def create_movie_tags_json():
-    
+
 
 @app.route('/clusters', methods=["GET"])
 def display_clusters():

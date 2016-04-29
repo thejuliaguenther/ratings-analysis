@@ -59,8 +59,13 @@ movieRowsRdd = movieRows.rdd
 mappedMovies = movieRowsRdd.map(lambda x: (str(x.movieId),str(x.title)))
 movieDict = mappedMovies.collectAsMap()
 
-for line in movieDict:
-    print line +":"+movieDict[line]
+
+
+mappedTitles = movieRowsRdd.map(lambda x: (str(x.title)[:-6],str(x.movieId)))
+titleDict = mappedTitles.collectAsMap()
+
+for line in titleDict:
+    print line 
 
 movieFile = open('movies.json', 'w')
 movieJSON =  json.dump(movieDict, movieFile)
@@ -69,6 +74,8 @@ movieJSON =  json.dump(movieDict, movieFile)
 # # Save the tags to a JSON file 
 tagFile = open('tags.json', 'w')
 tagJSON = json.dump(tagDict, tagFile)
+
+
 
 
     
