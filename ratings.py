@@ -60,7 +60,6 @@ mappedMovies = movieRowsRdd.map(lambda x: (str(x.movieId),str(x.title)))
 movieDict = mappedMovies.collectAsMap()
 
 
-
 mappedTitles = movieRowsRdd.map(lambda x: (str(x.title)[:-6],str(x.movieId)))
 titleDict = mappedTitles.collectAsMap()
 

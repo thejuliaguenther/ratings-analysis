@@ -10,8 +10,7 @@ movie_json = json.loads(movies_to_load)
 
 for line in movie_json:
     r1.set(str(line), str(movie_json[line]))
-
-
+    
 r2 = redis.StrictRedis(host='localhost', port=6379, db=1)
 
 tag_data = open("tags.json").read()
@@ -28,8 +27,11 @@ for movie in tag_json:
 # Maps movie title to movieis; this can be done as all movie titles unique 
 r3 = redis.StrictRedis(host='localhost', port=6379, db=2)
 
-for i in movie_json:
-    r3.set(str(movie_json[line]), str([i])
+for id in movie_json:
+    title = movie_json[id]
+    r3.set(str(title), str(id))
+
+    
 
 
 

@@ -10,7 +10,7 @@ from app import remove_duplicate_tags
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session, url_for
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "GHIKLMNO")
@@ -30,7 +30,8 @@ def display_movies():
         movie_list.append((i,value))
     return render_template("movie.html", movie_list=movie_list)
 
-@app.route('/movie_detail/<string:movie_id>', methods=["GET"])
+@app.route('/movie_detail/<movie_id>', methods=["GET"])
+@app.route('/movie_detail/', methods=["GET"])
 def show_movie_tags(movie_id):
     movie_title = r1.get(str(movie_id))
     movie_tags = r2.get(str(movie_id))
@@ -39,11 +40,15 @@ def show_movie_tags(movie_id):
 
     return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags)
 
-# @app.route('/find_movie', methods=["POST"])
-#     def find_movie():
-#         movie_name = request.form.get("movie-name")
+@app.route('/find_movie', methods=["POST"])
+def find_movie():
+    movie_name = request.form.get("search-form")
+    print movie_name
 
-#         if 
+    #TODO Exception Handiling 
+    id = r3.get(movie_name)
+
+    return redirect(url_for('show_movie_tags', movie_id=str(id)))
 
 
 # @app.route('/movie_tags.json')
