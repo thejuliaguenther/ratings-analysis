@@ -22,7 +22,7 @@
     color: #404040;
 }*/
 
-/*@media only screen and (min-width: 768px) {*/
+@media only screen and (min-width: 768px) {
   .page-navbar {
     background: #404040;
     border-bottom: 1px solid transparent;
@@ -49,4 +49,4 @@
   .template-container{
     margin-top: 50px;
   }
-/*}*/
+}
