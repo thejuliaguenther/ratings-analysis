@@ -22,6 +22,19 @@ app.jinja_env.undefined = StrictUndefined
 def index():
     return render_template("index.html")
 
+@app.route('/find_movie', methods=["POST"])
+def find_movie():
+    movie_name = request.form.get("movie_name")
+    print "MOVIE NAME"
+    print movie_name
+
+    #TODO Exception Handiling 
+    movie_id = r3.get(str(movie_name))
+    print "ID"
+    print movie_id
+
+    return redirect(url_for('show_movie_tags', movie_id=str(movie_id)))
+
 @app.route('/movies', methods=["GET"])
 def display_movies():
     movie_list = []
@@ -40,15 +53,7 @@ def show_movie_tags(movie_id):
 
     return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags)
 
-@app.route('/find_movie', methods=["POST"])
-def find_movie():
-    movie_name = request.form.get("search-form")
-    print movie_name
 
-    #TODO Exception Handiling 
-    id = r3.get(movie_name)
-
-    return redirect(url_for('show_movie_tags', movie_id=str(id)))
 
 
 # @app.route('/movie_tags.json')
