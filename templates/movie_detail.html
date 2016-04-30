@@ -2,10 +2,7 @@
 {% block content %}
 
 <h1>{{movie_title}}</h1>
-<!-- {% for tag in unique_tags %}
-    <li>{{tag}}</li>
 
-{% endfor %} -->
 <div id="word-cloud"></div>
 
 <script>
@@ -404,7 +401,7 @@
         return {text: d, size: 7 + Math.random() * 60};
       }))
       .rotate(function() { return ~~(Math.random() * 2) * 90; })
-      .font("Impact")
+      .font("Lora")
       .fontSize(function(d) { return d.size; })
       .on("end", draw)
       .start();
@@ -419,7 +416,7 @@
         .data(words)
       .enter().append("text")
         .style("font-size", function(d) { return (d.size)+ "px"; })
-        .style("font-family", "Impact")
+        .style("font-family", "Lora")
         .style("fill", function(d, i) { return fill(i); })
         .attr("text-anchor", "middle")
         .attr("transform", function(d) {

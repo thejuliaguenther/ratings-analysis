@@ -17,11 +17,6 @@
   margin: 50px;
 }
 
-/*.page-navbar .nav  li a {
-    padding: 20px;
-    color: #404040;
-}*/
-
 @media only screen and (min-width: 768px) {
   .page-navbar {
     background: #404040;
