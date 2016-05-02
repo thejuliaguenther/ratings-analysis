@@ -17,7 +17,7 @@ ratingsSchema = StructType([ \
     StructField("userId", LongType(), True), \
     StructField("movieId", LongType(), True), \
     StructField("rating",  FloatType(), True), \
-    StructField("timestamp", StringType(), True)])
+    StructField("time_stamp", StringType(), True)])
 
 ratingsDF = sqlContext.read.format('com.databricks.spark.csv').options(quote="\"").load('./ml-20m/ratings.csv', schema=ratingsSchema)
 ratingsDF.registerTempTable("ratings")
@@ -38,7 +38,7 @@ tagsSchema = StructType([ \
     StructField("userId", StringType(), True), \
     StructField("movieId", StringType(), True), \
     StructField("tag", StringType(), True), \
-    StructField("timestamp", StringType(), True)])
+    StructField("time_stamp", StringType(), True)])
 
 tagsDF = sqlContext.read.format('com.databricks.spark.csv').options(quote="\"").load('./ml-20m/tags.csv', schema=tagsSchema)
 tagsDF.registerTempTable("tags")
@@ -63,8 +63,7 @@ movieDict = mappedMovies.collectAsMap()
 mappedTitles = movieRowsRdd.map(lambda x: (str(x.title)[:-6],str(x.movieId)))
 titleDict = mappedTitles.collectAsMap()
 
-for line in titleDict:
-    print line 
+
 
 movieFile = open('movies.json', 'w')
 movieJSON =  json.dump(movieDict, movieFile)
@@ -75,7 +74,27 @@ tagFile = open('tags.json', 'w')
 tagJSON = json.dump(tagDict, tagFile)
 
 
+# Get the total number of ratings for a given movie 
+ratingRows = sqlContext.sql("SELECT movieId, time_stamp from ratings")
+ratingRowsRdd = ratingRows.rdd
+# mappedRatings = ratingRowsRdd.map(lambda x: (str(x.movieId),str(x.time_stamp)))
+# ratingDict = mappedRatings.countByKey()
+numRatings = sorted(ratingRowsRdd.countByKey().items())
+mappedRatings = {}
 
+for rated_movie in numRatings:
+    mappedRatings[rated_movie[0]] = rated_movie[1]
+
+ratingsFile = open('ratings.json', 'w')
+ratingsJSON =  json.dump(mappedRatings, ratingsFile)
+
+
+
+
+# for line in ratingDict:
+#     print line 
+
+# Visualize the timestamps for the movies over a time series 
 
     
 
