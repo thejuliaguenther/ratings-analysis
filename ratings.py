@@ -93,8 +93,8 @@ timestampRows = sqlContext.sql("SELECT movieId, tag, time_stamp from tags")
 timestampRowsRdd = timestampRows.rdd
 
 # Collect the id, tag, and time stamp for each rating 
-timestampRatings = timestampRowsRdd.map(lambda x: (str(x.movieId), str(x.time_stamp), [str(x.tag)]))
-timestampRatingsDict = timestampRatings.collect()
+timestampRatings = timestampRowsRdd.map(lambda x: (str(x.movieId), (str(x.time_stamp), [str(x.tag)])))
+timestampRatingsDict = timestampRatings.collectAsMap()
 
 timestampRatingsFile = open('timestamp_ratings.json', 'w')
 timestampRatingsJSON = json.dump(timestampRatingsDict, timestampRatingsFile)
