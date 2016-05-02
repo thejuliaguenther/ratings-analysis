@@ -41,6 +41,22 @@ ratings_json = json.loads(ratings_to_load)
 
 for rating in ratings_json:
     r4.set(str(rating),str(ratings_json[rating]))
+
+
+r5 = redis.StrictRedis(host='localhost', port=6379, db=4)
+
+time_data = open("timestamp_ratings.json").read()
+
+times_to_load = time_data.encode('ascii', 'ignore')
+time_json = json.loads(times_to_load)
+
+# for time in time_json:
+#     r5.set(str(time), str(time_json[time]))
+#     r5.get(time)
+
+r5.flushdb()
+
+
     
 
 
