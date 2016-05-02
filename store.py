@@ -52,8 +52,8 @@ times_to_load = time_data.encode('ascii', 'ignore')
 time_json = json.loads(times_to_load)
 
 for time in time_json:
-    r5.set(str(time), [str(x) for x in time_json[time]])
-    print r5.get(time)
+    r5.set(str(time), str(time_json[time][0]))
+
 
 
 
