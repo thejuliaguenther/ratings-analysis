@@ -30,11 +30,19 @@ r3 = redis.StrictRedis(host='localhost', port=6379, db=2)
 for id in movie_json:
     title = movie_json[id]
     title = title[0:-7]
-    print "TITLE"
-    print str(title)
     r3.set(str(title), str(id))
-    print "ID"
-    print r3.get(str(title))
+
+
+r4 = redis.StrictRedis(host='localhost', port=6379, db=3)
+
+ratings_data = open("ratings.json").read()
+ratings_to_load = ratings_data.encode('ascii', 'ignore')
+ratings_json = json.loads(ratings_to_load)
+
+for rating in ratings_json:
+    r4.set(str(rating),str(ratings_json[rating]))
+    print r4.get(rating)
+
 
 
 

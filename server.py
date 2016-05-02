@@ -51,6 +51,8 @@ def show_movie_tags(movie_id):
 
     unique_tags = remove_duplicate_tags(movie_tags)
 
+    
+
     return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags)
 
 
