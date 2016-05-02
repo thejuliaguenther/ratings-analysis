@@ -41,7 +41,7 @@ ratings_json = json.loads(ratings_to_load)
 
 for rating in ratings_json:
     r4.set(str(rating),str(ratings_json[rating]))
-    print r4.get(rating)
+    
 
 
 
