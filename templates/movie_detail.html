@@ -428,6 +428,22 @@
   }
 
 
+d3.json('data/brief-2.json', function(data) {
+    data = MG.convert.date(data, 'date');
+    MG.data_graphic({
+        title: "Other Linked Graphic",
+        description: "Roll over and watch as the graphic to the left triggers.",
+        data: data,
+        area: false,
+        linked: true,
+        width: 600,
+        height: 200,
+        right: 40,
+        xax_count: 4,
+        target: '#briefing-2'
+    });
+});
+
 
 
 </script>
