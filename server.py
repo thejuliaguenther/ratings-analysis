@@ -4,7 +4,7 @@ import redis
 
 import json 
 
-from store import r1,r2, r3, r4, movie_json,tag_json
+from store import r1,r2, r3, r4, r5, movie_json,tag_json
 
 from app import remove_duplicate_tags
 
@@ -53,9 +53,9 @@ def show_movie_tags(movie_id):
 
     num_ratings = r4.get(str(movie_id))
 
-    # rating_dates = 
+    rating_dates = r5.get(str(movie_id))
 
-    return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags, num_ratings=num_ratings)
+    return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags, num_ratings=num_ratings, rating_dates=rating_dates)
 
 
 
