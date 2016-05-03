@@ -88,17 +88,18 @@ for rated_movie in numRatings:
 ratingsFile = open('ratings.json', 'w')
 ratingsJSON =  json.dump(mappedRatings, ratingsFile)
 
-timestampsPerMovie = ratingRowsRdd.map(lambda x: (str(x.movieId), str(x.time_stamp)))
+timestampsPerMovie = ratingRowsRdd.map(lambda x: (str(x.movieId), [str(x.time_stamp)]))
+combinedTimestampsPerMovie  = timestampsPerMovie.reduceByKey(lambda a,b: a+b)
 
 # combinedTimestampsPerMovie = timestampsPerMovie.reduceByKey(lambda a,b: a+b)
-timestampsPerMovieDict = timestampsPerMovie.collectAsMap()
+timestampsPerMovieDict = combinedTimestampsPerMovie.collectAsMap()
 
 print timestampsPerMovieDict
 
 # print timestampsPerMovieDict
 
-timestampsPerMovieFile = open('timestamps_per_movie.json', 'w')
-timestampsPerMovieJSON =  json.dump(timestampsPerMovieDict, timestampsPerMovieFile)
+# timestampsPerMovieFile = open('timestamps_per_movie.json', 'w')
+# timestampsPerMovieJSON =  json.dump(timestampsPerMovieDict, timestampsPerMovieFile)
 
 # # Get the timestamps for ratings of each movie
 # timestampRows = sqlContext.sql("SELECT movieId, tag, time_stamp from tags")
