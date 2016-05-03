@@ -51,11 +51,15 @@ time_data = open("timestamps_per_movie.json").read()
 times_to_load = time_data.encode('ascii', 'ignore')
 time_json = json.loads(times_to_load)
 
+
 for time in time_json:
+    for seconds in xrange(len(time_json[time])):
+        ascii_seconds = time_json[time][seconds].encode('ascii', 'ignore')
+        time_json[time][seconds] = ascii_seconds
     r5.set(str(time), str(time_json[time]))
-
-
     # print r5.get(time)
+
+
 
 
 
