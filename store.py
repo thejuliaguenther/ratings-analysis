@@ -46,13 +46,17 @@ for rating in ratings_json:
 
 r5 = redis.StrictRedis(host='localhost', port=6379, db=4)
 
-time_data = open("timestamp_ratings.json").read()
+time_data = open("timestamps_per_movie.json").read()
 
 times_to_load = time_data.encode('ascii', 'ignore')
 time_json = json.loads(times_to_load)
 
 for time in time_json:
-    r5.set(str(time), str(time_json[time][0]))
+    r5.set(str(time), str(time_json[time]))
+    print r5.get(time)
+
+
+
 
 
 
