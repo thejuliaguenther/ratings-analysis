@@ -94,12 +94,11 @@ combinedTimestampsPerMovie  = timestampsPerMovie.reduceByKey(lambda a,b: a+b)
 # combinedTimestampsPerMovie = timestampsPerMovie.reduceByKey(lambda a,b: a+b)
 timestampsPerMovieDict = combinedTimestampsPerMovie.collectAsMap()
 
-print timestampsPerMovieDict
 
 # print timestampsPerMovieDict
 
-# timestampsPerMovieFile = open('timestamps_per_movie.json', 'w')
-# timestampsPerMovieJSON =  json.dump(timestampsPerMovieDict, timestampsPerMovieFile)
+timestampsPerMovieFile = open('timestamps_per_movie.json', 'w')
+timestampsPerMovieJSON =  json.dump(timestampsPerMovieDict, timestampsPerMovieFile)
 
 # # Get the timestamps for ratings of each movie
 # timestampRows = sqlContext.sql("SELECT movieId, tag, time_stamp from tags")

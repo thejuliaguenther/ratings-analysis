@@ -53,7 +53,7 @@ time_json = json.loads(times_to_load)
 
 for time in time_json:
     r5.set(str(time), str(time_json[time]))
-    print r5.get(time)
+    # print r5.get(time)
 
 
 

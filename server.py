@@ -33,7 +33,7 @@ def find_movie():
     print "ID"
     print movie_id
 
-    return redirect(url_for('sh ow_movie_tags', movie_id=str(movie_id)))
+    return redirect(url_for('show_movie_tags', movie_id=str(movie_id)))
 
 @app.route('/movies', methods=["GET"])
 def display_movies():
