@@ -53,7 +53,7 @@ def show_movie_tags(movie_id):
 
     num_ratings = r4.get(str(movie_id))
 
-    rating_dates = 
+    # rating_dates = 
 
     return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags, num_ratings=num_ratings)
 
