@@ -59,7 +59,6 @@ def show_movie_tags(movie_id):
 
 
 
-
 # @app.route('/movie_tags.json')
 # def create_movie_tags_json():
 

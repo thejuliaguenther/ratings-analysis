@@ -8,7 +8,9 @@
 <h2> Rating times: {{rating_dates}}</h2>
 
 <div id="word-cloud"></div>
+<div id="time-graph"></div>
 
+<script src='/static/metrics-graphics-2.9.0/dist/metricsgraphics.min.js'></script>
 <script>
 // Word cloud layout by Jason Davies, http://www.jasondavies.com/word-cloud/
 // Algorithm due to Jonathan Feinberg, http://static.mrfeinberg.com/bv_ch03.pdf
@@ -428,10 +430,10 @@
         })
         .text(function(d) { return d.text; });
   }
+var timestamp_data = {{rating_dates|tojson}}
 
-
-d3.json('data/brief-2.json', function(data) {
-    data = MG.convert.date(data, 'date');
+d3.json(timestamp_data, function(data) {
+    data = MG.convert.date(timestamp_data, 'date');
     MG.data_graphic({
         title: "Other Linked Graphic",
         description: "Roll over and watch as the graphic to the left triggers.",
@@ -442,7 +444,7 @@ d3.json('data/brief-2.json', function(data) {
         height: 200,
         right: 40,
         xax_count: 4,
-        target: '#briefing-2'
+        target: 'time-graph'
     });
 });
 
