@@ -46,12 +46,11 @@ def process_timestamps(rating_dates):
 
         date_num =float(time_digit_str)
         new_date = datetime.fromtimestamp(date_num)
-        print new_date
-    #     date_year = new_date.year
-    #     date_month = new_date.month
+        date_year = new_date.year
+        date_month = new_date.month
 
-    #     if (date_month,date_year) in month_year_count:
-    #         month_year_count[(date_month,date_year)] += 1
-    #     else:
-    #         month_year_count[(date_month,date_year)] = 1
-    # print month_year_count
+        if (date_month,date_year) in month_year_count:
+            month_year_count[(date_month,date_year)] += 1
+        else:
+            month_year_count[(date_month,date_year)] = 1
+    print month_year_count
