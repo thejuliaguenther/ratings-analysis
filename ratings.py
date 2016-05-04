@@ -43,62 +43,90 @@ tagsSchema = StructType([ \
 tagsDF = sqlContext.read.format('com.databricks.spark.csv').options(quote="\"").load('./ml-20m/tags.csv', schema=tagsSchema)
 tagsDF.registerTempTable("tags")
 
-tagLines = sqlContext.sql("SELECT userId, movieId, tag FROM tags")
-tagLinesRdd = tagLines.rdd
+# tagLines = sqlContext.sql("SELECT userId, movieId, tag FROM tags")
+# tagLinesRdd = tagLines.rdd
 
-mappedTags = tagLinesRdd.map(lambda x: (str(x.movieId),[str(x.tag)]))
+# mappedTags = tagLinesRdd.map(lambda x: (str(x.movieId),[str(x.tag)]))
 
-combinedTags = mappedTags.reduceByKey(lambda a,b: a+b)
-tagDict = combinedTags.collectAsMap()
+# combinedTags = mappedTags.reduceByKey(lambda a,b: a+b)
+# tagDict = combinedTags.collectAsMap()
 
-# print tagDict
+# # print tagDict
 
-movieRows = sqlContext.sql("SELECT movieId, title from movies")
-movieRowsRdd = movieRows.rdd
+# movieRows = sqlContext.sql("SELECT movieId, title from movies")
+# movieRowsRdd = movieRows.rdd
 
-mappedMovies = movieRowsRdd.map(lambda x: (str(x.movieId),str(x.title)))
-movieDict = mappedMovies.collectAsMap()
-
-
-mappedTitles = movieRowsRdd.map(lambda x: (str(x.title)[:-6],str(x.movieId)))
-titleDict = mappedTitles.collectAsMap()
+# mappedMovies = movieRowsRdd.map(lambda x: (str(x.movieId),str(x.title)))
+# movieDict = mappedMovies.collectAsMap()
 
 
-
-movieFile = open('movies.json', 'w')
-movieJSON =  json.dump(movieDict, movieFile)
-
-
-# # Save the tags to a JSON file 
-tagFile = open('tags.json', 'w')
-tagJSON = json.dump(tagDict, tagFile)
+# mappedTitles = movieRowsRdd.map(lambda x: (str(x.title)[:-6],str(x.movieId)))
+# titleDict = mappedTitles.collectAsMap()
 
 
-# Get the total number of ratings for a given movie 
-ratingRows = sqlContext.sql("SELECT movieId, time_stamp from ratings")
-ratingRowsRdd = ratingRows.rdd
-# mappedRatings = ratingRowsRdd.map(lambda x: (str(x.movieId),str(x.time_stamp)))
-# ratingDict = mappedRatings.countByKey()
-numRatings = sorted(ratingRowsRdd.countByKey().items())
-mappedRatings = {}
 
-for rated_movie in numRatings:
-    mappedRatings[rated_movie[0]] = rated_movie[1]
-
-ratingsFile = open('ratings.json', 'w')
-ratingsJSON =  json.dump(mappedRatings, ratingsFile)
-
-timestampsPerMovie = ratingRowsRdd.map(lambda x: (str(x.movieId), [str(x.time_stamp)]))
-combinedTimestampsPerMovie  = timestampsPerMovie.reduceByKey(lambda a,b: a+b)
-
-# combinedTimestampsPerMovie = timestampsPerMovie.reduceByKey(lambda a,b: a+b)
-timestampsPerMovieDict = combinedTimestampsPerMovie.collectAsMap()
+# movieFile = open('movies.json', 'w')
+# movieJSON =  json.dump(movieDict, movieFile)
 
 
-# print timestampsPerMovieDict
+# # # Save the tags to a JSON file 
+# tagFile = open('tags.json', 'w')
+# tagJSON = json.dump(tagDict, tagFile)
 
-timestampsPerMovieFile = open('timestamps_per_movie.json', 'w')
-timestampsPerMovieJSON =  json.dump(timestampsPerMovieDict, timestampsPerMovieFile)
+
+# # Get the total number of ratings for a given movie 
+# ratingRows = sqlContext.sql("SELECT movieId, time_stamp from ratings")
+# ratingRowsRdd = ratingRows.rdd
+# # mappedRatings = ratingRowsRdd.map(lambda x: (str(x.movieId),str(x.time_stamp)))
+# # ratingDict = mappedRatings.countByKey()
+# numRatings = sorted(ratingRowsRdd.countByKey().items())
+# mappedRatings = {}
+
+# for rated_movie in numRatings:
+#     mappedRatings[rated_movie[0]] = rated_movie[1]
+
+# ratingsFile = open('ratings.json', 'w')
+# ratingsJSON =  json.dump(mappedRatings, ratingsFile)
+
+# timestampsPerMovie = ratingRowsRdd.map(lambda x: (str(x.movieId), [str(x.time_stamp)]))
+# combinedTimestampsPerMovie  = timestampsPerMovie.reduceByKey(lambda a,b: a+b)
+
+# # combinedTimestampsPerMovie = timestampsPerMovie.reduceByKey(lambda a,b: a+b)
+# timestampsPerMovieDict = combinedTimestampsPerMovie.collectAsMap()
+
+
+# # print timestampsPerMovieDict
+
+# timestampsPerMovieFile = open('timestamps_per_movie.json', 'w')
+# timestampsPerMovieJSON =  json.dump(timestampsPerMovieDict, timestampsPerMovieFile)
+
+totalRatingRows = sqlContext.sql("SELECT movieId, rating from ratings")
+totalRatingRowsRdd = totalRatingRows.rdd
+
+mappedTotalRatings = totalRatingRowsRdd.map(lambda x: (str(x.movieId),[str(x.rating)]))
+total = mappedTotalRatings.reduceByKey(lambda a,b: a+b)
+totalRatingsDict = total.collectAsMap()
+
+
+# ratings_map = {}
+
+# for movie_with_rating in totalRatingsDict:
+#     individual_rating_map = {}
+#     for value in totalRatingsDict[movie_with_rating]:
+#         if value in individual_rating_map:
+#             individual_rating_map[value] += 1
+#         else:
+#             individual_rating_map[value] = 1
+#     ratings_map[movie_with_rating] = individual_rating_map 
+
+# print ratings_map
+
+
+mappedTotalRatingsFile = open('rating_counts.json', 'w')
+mappedTotalRatingsJSON = json.dump(totalRatingsDict, mappedTotalRatingsFile)
+
+
+
 
 # # Get the timestamps for ratings of each movie
 # timestampRows = sqlContext.sql("SELECT movieId, tag, time_stamp from tags")

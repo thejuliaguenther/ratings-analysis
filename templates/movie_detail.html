@@ -5,10 +5,12 @@
 
 <h2>Total Ratings: {{num_ratings}}</h2>
 
-<h2> Rating times: {{rating_dates}}</h2>
+<h2> Rating times: </h2>
 
 <div id="word-cloud"></div>
-<div id="time-graph"></div>
+<div id="time-graph">
+<h2>Hello</h2>
+</div>
 
 <script src='/static/metrics-graphics-2.9.0/dist/metricsgraphics.min.js'></script>
 <script>
@@ -430,24 +432,68 @@
         })
         .text(function(d) { return d.text; });
   }
-var timestamp_data = {{rating_dates|tojson}}
+var timestamp_data = {{ rating_dates| tojson }};
 
-d3.json(timestamp_data, function(data) {
-    data = MG.convert.date(timestamp_data, 'date');
+console.log(timestamp_data)
+
+function renderTimestampGraph(timestamp_data) {
+    data_to_add = MG.convert.date(timestamp_data, 'date');
     MG.data_graphic({
         title: "Other Linked Graphic",
         description: "Roll over and watch as the graphic to the left triggers.",
-        data: data,
+        data: data_to_add,
         area: false,
         linked: true,
         width: 600,
         height: 200,
         right: 40,
         xax_count: 4,
-        target: 'time-graph'
+        target: '#time-graph'
     });
-});
+}
 
+
+function renderRatingsPieChart() {
+      /*These lines set up the pie chart with data on tickets from different customer tiers
+      */
+        var width = 300,
+        height = 300,
+        radius = Math.min(width, height) / 2;
+        
+        var color = d3.scale.ordinal()
+        .range(["#67E40F", "#0CB577", "#387BB8"]);
+        
+        var arc = d3.svg.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(0);
+        var pie = d3.layout.pie()
+            .sort(null)
+            .value(function(d) { return d.count; });
+        var svg2 = d3.select("#supportchart").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("align","center")
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+        json_route = "/tickets_by_tier.json?" + $('#ticket-ranges').serialize();
+        
+        d3.json(json_route, 
+           function(error, data) {
+                var g = svg2.selectAll(".arc")
+                      .data(pie(data.data))
+                      .enter().append("g")
+                      .attr("class", "arc");
+                  g.append("path")
+                      .attr("d", arc)
+                      .style("fill", function(d) { return color(d.data.support_tier); });
+                  g.append("text")
+                      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+                      .attr("dy", ".35em")
+                      .style("text-anchor", "middle")
+                      .style("font-family", 'Source Sans Pro', 'sans-serif')
+                      .text(function(d) { return d.data.support_tier; });
+        });
+      }
 
 
 </script>

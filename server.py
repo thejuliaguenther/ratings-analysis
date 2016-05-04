@@ -55,9 +55,15 @@ def show_movie_tags(movie_id):
 
     rating_dates = r5.get(str(movie_id))
 
-    return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags, num_ratings=num_ratings, rating_dates=rating_dates)
+    return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags, num_ratings=num_ratings, movie_id= movie_id)
+
+# @app.route('/timestamps.json/<movie_id', methods=["GET"])
+# def get_movie_timestamps(movie_id):
+#     rating_dates = r5.get(str(movie_id))
 
 
+#     unique_timestam
+#     return jsonify()
 
 # @app.route('/movie_tags.json')
 # def create_movie_tags_json():
