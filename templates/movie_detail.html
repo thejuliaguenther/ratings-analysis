@@ -432,7 +432,7 @@
         })
         .text(function(d) { return d.text; });
   }
-var timestamp_data = {{ rating_dates| tojson }};
+var timestamp_data = {{ ratings_per_month_and_year| tojson }};
 
 console.log(timestamp_data)
 
@@ -453,47 +453,47 @@ function renderTimestampGraph(timestamp_data) {
 }
 
 
-function renderRatingsPieChart() {
-      /*These lines set up the pie chart with data on tickets from different customer tiers
-      */
-        var width = 300,
-        height = 300,
-        radius = Math.min(width, height) / 2;
+// function renderRatingsPieChart() {
+//       /*These lines set up the pie chart with data on tickets from different customer tiers
+//       */
+//         var width = 300,
+//         height = 300,
+//         radius = Math.min(width, height) / 2;
         
-        var color = d3.scale.ordinal()
-        .range(["#67E40F", "#0CB577", "#387BB8", "#67E40F", "#0CB577", "#387BB8", "#67E40F","#67E40F,""#67E40F","#67E40F","#67E40F"]);
+//         var color = d3.scale.ordinal()
+//         .range(["#67E40F", "#0CB577", "#387BB8", "#67E40F", "#0CB577", "#387BB8", "#67E40F","#67E40F,""#67E40F","#67E40F","#67E40F"]);
         
-        var arc = d3.svg.arc()
-        .outerRadius(radius - 10)
-        .innerRadius(0);
-        var pie = d3.layout.pie()
-            .sort(null)
-            .value(function(d) { return d.count; });
-        var svg2 = d3.select("#supportchart").append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .attr("align","center")
-            .append("g")
-            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-        json_route = "/tickets_by_tier.json?" + $('#ticket-ranges').serialize();
+//         var arc = d3.svg.arc()
+//         .outerRadius(radius - 10)
+//         .innerRadius(0);
+//         var pie = d3.layout.pie()
+//             .sort(null)
+//             .value(function(d) { return d.count; });
+//         var svg2 = d3.select("#supportchart").append("svg")
+//             .attr("width", width)
+//             .attr("height", height)
+//             .attr("align","center")
+//             .append("g")
+//             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+//         json_route = "/tickets_by_tier.json?" + $('#ticket-ranges').serialize();
         
-        d3.json(json_route, 
-           function(error, data) {
-                var g = svg2.selectAll(".arc")
-                      .data(pie(data.data))
-                      .enter().append("g")
-                      .attr("class", "arc");
-                  g.append("path")
-                      .attr("d", arc)
-                      .style("fill", function(d) { return color(d.data.support_tier); });
-                  g.append("text")
-                      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-                      .attr("dy", ".35em")
-                      .style("text-anchor", "middle")
-                      .style("font-family", 'Source Sans Pro', 'sans-serif')
-                      .text(function(d) { return d.data.support_tier; });
-        });
-      }
+//         d3.json(json_route, 
+//            function(error, data) {
+//                 var g = svg2.selectAll(".arc")
+//                       .data(pie(data.data))
+//                       .enter().append("g")
+//                       .attr("class", "arc");
+//                   g.append("path")
+//                       .attr("d", arc)
+//                       .style("fill", function(d) { return color(d.data.support_tier); });
+//                   g.append("text")
+//                       .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+//                       .attr("dy", ".35em")
+//                       .style("text-anchor", "middle")
+//                       .style("font-family", 'Source Sans Pro', 'sans-serif')
+//                       .text(function(d) { return d.data.support_tier; });
+//         });
+      // }
 
 
 </script>
