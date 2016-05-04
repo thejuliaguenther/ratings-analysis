@@ -57,7 +57,7 @@ def show_movie_tags(movie_id):
 
     ratings_per_month_and_year = process_timestamps(rating_dates)
 
-    return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags, num_ratings=num_ratings, movie_id= movie_id)
+    return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags, num_ratings=num_ratings, movie_id= movie_id, rating_dates=rating_dates, ratings_per_month_and_year=ratings_per_month_and_year)
 
 
 @app.route('/clusters', methods=["GET"])
