@@ -36,22 +36,27 @@ def process_timestamps(rating_dates):
 
         date_num =float(time_digit_str)
         new_date = datetime.fromtimestamp(date_num)
-        date_year = new_date.year
-        date_month = new_date.month
+        print new_date
+        # date_year = new_date.year
+        # date_month = new_date.month
 
-        date_string = str(date_month) + "-"+ str(date_year)
+        # date_string = str(date_month) + "-"+ str(date_year)
 
-        if date_string in month_year_count:
-            month_year_count[date_string] += 1
+        # if date_string in month_year_count:
+        #     month_year_count[date_string] += 1
+        # else:
+        #     month_year_count[date_string] = 1
+        if new_date in month_year_count:
+            month_year_count[new_date] += 1
         else:
-            month_year_count[date_string] = 1
+            month_year_count[new_date] = 1
     key_value_list = get_keys_and_values(month_year_count)
     return key_value_list
 
 def get_keys_and_values(count_dict):
     result = []
     for key in count_dict:
-        pair = {'month':key, 'count':count_dict[key]}
+        pair = {'date':key, 'count':count_dict[key]}
         result.append(pair)
     return result 
 

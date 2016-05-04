@@ -12,7 +12,7 @@
 <h2>Hello</h2>
 </div>
 
-<script src='/static/metrics-graphics-2.9.0/dist/metricsgraphics.min.js'></script>
+<script src='/static/metrics-graphics-2.9.0/dist/metricsgraphics.js'></script>
 <script>
 // Word cloud layout by Jason Davies, http://www.jasondavies.com/word-cloud/
 // Algorithm due to Jonathan Feinberg, http://static.mrfeinberg.com/bv_ch03.pdf
@@ -437,20 +437,25 @@ var timestamp_data = {{ ratings_per_month_and_year| tojson }};
 console.log(timestamp_data)
 
 function renderTimestampGraph(timestamp_data) {
-    data_to_add = MG.convert.date(timestamp_data, 'date');
+    // data_to_add = MG.convert.date(timestamp_data, 'date');
+    timestamp_data = MG.convert.date(timestamp_data, 'date');
     MG.data_graphic({
         title: "Other Linked Graphic",
         description: "Roll over and watch as the graphic to the left triggers.",
-        data: data_to_add,
+        data: timestamp_data,
         area: false,
         linked: true,
         width: 600,
         height: 200,
         right: 40,
         xax_count: 4,
+        x_accessor: 'date',
+        y_accessor: 'count',
         target: '#time-graph'
     });
 }
+
+renderTimestampGraph(timestamp_data);
 
 
 // function renderRatingsPieChart() {
