@@ -6,7 +6,7 @@ import json
 
 from store import r1,r2, r3, r4, r5, movie_json,tag_json
 
-from app import remove_duplicate_tags
+from app import remove_duplicate_tags, process_timestamps
 
 from jinja2 import StrictUndefined
 
@@ -55,22 +55,9 @@ def show_movie_tags(movie_id):
 
     rating_dates = r5.get(str(movie_id))
 
+    ratings_per_month_and_year = process_timestamps(rating_dates)
+
     return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags, num_ratings=num_ratings, movie_id= movie_id)
-
-# @app.route('/movie_detail/<movie_id>', methods=["GET"])
-# @app.route('/movie_ratings.json')
-# def get_all_ratings(movie_id):
-    
-# @app.route('/timestamps.json/<movie_id', methods=["GET"])
-# def get_movie_timestamps(movie_id):
-#     rating_dates = r5.get(str(movie_id))
-
-
-#     unique_timestam
-#     return jsonify()
-
-# @app.route('/movie_tags.json')
-# def create_movie_tags_json():
 
 
 @app.route('/clusters', methods=["GET"])
