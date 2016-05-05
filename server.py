@@ -10,7 +10,7 @@ from app import remove_duplicate_tags, process_timestamps
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, redirect, request, flash, session, url_for
+from flask import Flask, render_template, redirect, request, flash, session, url_for, jsonify
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "GHIKLMNO")
@@ -53,11 +53,20 @@ def show_movie_tags(movie_id):
 
     num_ratings = r4.get(str(movie_id))
 
+    # rating_dates = r5.get(str(movie_id))
+
+    # ratings_per_month_and_year = process_timestamps(rating_dates)
+
+    return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags, num_ratings=num_ratings, movie_id= movie_id)
+
+# @app.route('/movie_detail/<movie_id>', methods=["GET"])
+@app.route('/timestamp_counts.json/<movie_id>', methods=["GET"])
+def get_timestamp_counts(movie_id):
     rating_dates = r5.get(str(movie_id))
 
     ratings_per_month_and_year = process_timestamps(rating_dates)
 
-    return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags, num_ratings=num_ratings, movie_id= movie_id, rating_dates=rating_dates, ratings_per_month_and_year=ratings_per_month_and_year)
+    return jsonify(data=ratings_per_month_and_year)
 
 
 @app.route('/clusters', methods=["GET"])
