@@ -59,7 +59,6 @@ def show_movie_tags(movie_id):
 
     return render_template("movie_detail.html", movie_title=movie_title, unique_tags=unique_tags, num_ratings=num_ratings, movie_id= movie_id)
 
-# @app.route('/movie_detail/<movie_id>', methods=["GET"])
 @app.route('/timestamp_counts.json/<movie_id>', methods=["GET"])
 def get_timestamp_counts(movie_id):
     rating_dates = r5.get(str(movie_id))

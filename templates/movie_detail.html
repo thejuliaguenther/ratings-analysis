@@ -432,13 +432,13 @@
         })
         .text(function(d) { return d.text; });
   }
-var timestamp_data = {{ ratings_per_month_and_year| tojson }};
 
-console.log(timestamp_data)
+var movie_to_graph = {{ movie_id| tojson }};
 
-function renderTimestampGraph(timestamp_data) {
+function renderTimestampGraph() {
     // data_to_add = MG.convert.date(timestamp_data, 'date');
-    timestamp_data = MG.convert.date(timestamp_data, 'date');
+    data = $.get("/timestamp_counts.json/"+movie_to_graph, function(data){
+    timestamp_data = MG.convert.date(data, 'date');
     MG.data_graphic({
         title: "Other Linked Graphic",
         description: "Roll over and watch as the graphic to the left triggers.",
@@ -453,9 +453,10 @@ function renderTimestampGraph(timestamp_data) {
         y_accessor: 'count',
         target: '#time-graph'
     });
-}
+});
+  }
 
-renderTimestampGraph(timestamp_data);
+renderTimestampGraph();
 
 
 // function renderRatingsPieChart() {
