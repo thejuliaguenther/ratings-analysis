@@ -36,7 +36,7 @@ def process_timestamps(rating_dates):
 
         date_num =float(time_digit_str)
         new_date = datetime.fromtimestamp(date_num)
-        print new_date
+        new_date = new_date.strftime('%Y'+'-'+'%m')
         # date_year = new_date.year
         # date_month = new_date.month
 
@@ -51,6 +51,7 @@ def process_timestamps(rating_dates):
         else:
             month_year_count[new_date] = 1
     key_value_list = get_keys_and_values(month_year_count)
+    print key_value_list
     return key_value_list
 
 def get_keys_and_values(count_dict):
