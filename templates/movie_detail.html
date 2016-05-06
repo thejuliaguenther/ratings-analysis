@@ -12,7 +12,11 @@
 <h2>Hello</h2>
 </div>
 
-<script src='/static/metrics-graphics-2.9.0/dist/metricsgraphics.js'></script>
+<div id="chart"</div>
+
+<script src='/static/js/c3-0.4.11/c3.js'></script>
+
+
 <script>
 // Word cloud layout by Jason Davies, http://www.jasondavies.com/word-cloud/
 // Algorithm due to Jonathan Feinberg, http://static.mrfeinberg.com/bv_ch03.pdf
@@ -435,28 +439,81 @@
 
 var movie_to_graph = {{ movie_id| tojson }};
 
-function renderTimestampGraph() {
-    // data_to_add = MG.convert.date(timestamp_data, 'date');
-    data = $.get("/timestamp_counts.json/"+movie_to_graph, function(data){
-    timestamp_data = MG.convert.date(data, 'date');
-    MG.data_graphic({
-        title: "Other Linked Graphic",
-        description: "Roll over and watch as the graphic to the left triggers.",
-        data: timestamp_data,
-        area: false,
-        linked: true,
-        width: 600,
-        height: 200,
-        right: 40,
-        xax_count: 4,
-        x_accessor: 'date',
-        y_accessor: 'count',
-        target: '#time-graph'
-    });
-});
-  }
+// function renderTimestampGraph() {
+//     // data_to_add = MG.convert.date(timestamp_data, 'date');
+//     data = $.get("/timestamp_counts.json/"+movie_to_graph, function(data){
+//     timestamp_data = MG.convert.date(data, 'date', '%Y-%m');
+//     MG.data_graphic({
+//         title: "Other Linked Graphic",
+//         description: "Roll over and watch as the graphic to the left triggers.",
+//         data: timestamp_data,
+//         area: false,
+//         linked: true,
+//         width: 600,
+//         height: 200,
+//         right: 40,
+//         xax_count: 4,
+//         x_accessor: 'date',
+//         y_accessor: 'count',
+//         target: '#time-graph'
+//     });
+// });
+//   }
 
-renderTimestampGraph();
+// renderTimestampGraph();
+
+ timestamp_data = $.get("/timestamp_counts.json/"+movie_to_graph, function (data) {
+    console.log(data);
+    var modData = [];
+    data.forEach(function(d, i) {
+      var item = ["param-" + d.param];
+      d.forEach(function(j) {
+        item.push(j);
+      });
+      modData.push(item);
+    });
+    console.log(modData);
+
+    var chart = c3.generate({
+    // timestamp_data = $.get("/timestamp_counts.json/"+movie_to_graph).serialize(), function(timestamp_data){
+    //   console.log(timestamp_data);
+//     data: {
+//         x: 'x',
+// //        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
+//         columns: [
+//             ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'],
+// //            ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
+//             ['data1', 30, 200, 100, 400, 150, 250],
+//             ['data2', 130, 340, 200, 500, 250, 350]
+//         ]
+//     },
+      // data: {
+      //       url: ('/timestamp_counts.json/' + movie_to_graph),
+      //       mimeType: 'json'
+      //   },
+      data: {
+      columns: modData
+    },
+      axis: {
+        x: {
+            type: 'timeseries',
+            tick: {
+                format: '%Y-%m'
+            }
+        }
+    }
+  });
+  });
+
+// setTimeout(function () {
+//     chart.load({
+//         columns: [
+//             ['data3', 400, 500, 450, 700, 600, 500]
+//         ]
+//     });
+// }, 1000);
+
+// chart.load();
 
 
 // function renderRatingsPieChart() {
