@@ -462,17 +462,20 @@ var movie_to_graph = {{ movie_id| tojson }};
 
 // renderTimestampGraph();
 
+renderTimestampGraph();
+
 function renderTimestampGraph(){
   var url = "/timestamp_counts.json/"+movie_to_graph;
-  console.log(url);
    timestamp_data = $.get(url, function (data) {
       // Since the data is sorted, we can have two separate arrays
-      console.log(data.length)
+      console.log(data.data)
       var months = [];
       var counts = [];
-      for(var i=0; i < data.length; i++)
-        months[i] = data[i]['date']
-        counts[i] = data[i]['count']
+      console.log(data.data[0]);
+      for(var i=0; i < data.data.length; i++){
+        months.push(data.data[i].date);
+        counts.push(data.data[i].count);
+      }
       console.log(months)
       console.log(counts)
 
@@ -493,9 +496,9 @@ function renderTimestampGraph(){
       //       url: ('/timestamp_counts.json/' + movie_to_graph),
       //       mimeType: 'json'
       //   },
-          data: {
-          columns: modData
-        },
+        //   data: {
+        //   columns: 
+        // },
           axis: {
             x: {
                 type: 'timeseries',
@@ -508,7 +511,7 @@ function renderTimestampGraph(){
   });
 }
 
-renderTimestampGraph();
+
 // setTimeout(function () {
 //     chart.load({
 //         columns: [
