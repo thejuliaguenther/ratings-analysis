@@ -462,19 +462,21 @@ var movie_to_graph = {{ movie_id| tojson }};
 
 // renderTimestampGraph();
 
- timestamp_data = $.get("/timestamp_counts.json/"+movie_to_graph, function (data) {
-    console.log(data);
-    var modData = [];
-    data.forEach(function(d, i) {
-      var item = ["param-" + d.param];
-      d.forEach(function(j) {
-        item.push(j);
-      });
-      modData.push(item);
-    });
-    console.log(modData);
+function renderTimestampGraph(){
+  var url = "/timestamp_counts.json/"+movie_to_graph;
+  console.log(url);
+   timestamp_data = $.get(url, function (data) {
+      // Since the data is sorted, we can have two separate arrays
+      console.log(data.length)
+      var months = [];
+      var counts = [];
+      for(var i=0; i < data.length; i++)
+        months[i] = data[i]['date']
+        counts[i] = data[i]['count']
+      console.log(months)
+      console.log(counts)
 
-    var chart = c3.generate({
+      var chart = c3.generate({
     // timestamp_data = $.get("/timestamp_counts.json/"+movie_to_graph).serialize(), function(timestamp_data){
     //   console.log(timestamp_data);
 //     data: {
@@ -491,20 +493,22 @@ var movie_to_graph = {{ movie_id| tojson }};
       //       url: ('/timestamp_counts.json/' + movie_to_graph),
       //       mimeType: 'json'
       //   },
-      data: {
-      columns: modData
-    },
-      axis: {
-        x: {
-            type: 'timeseries',
-            tick: {
-                format: '%Y-%m'
+          data: {
+          columns: modData
+        },
+          axis: {
+            x: {
+                type: 'timeseries',
+                tick: {
+                    format: '%Y-%m'
+                }
             }
         }
-    }
+      });
   });
-  });
+}
 
+renderTimestampGraph();
 // setTimeout(function () {
 //     chart.load({
 //         columns: [
