@@ -61,6 +61,10 @@ def get_keys_and_values(count_dict, key1, key2):
     return result 
 
 def get_rating_breakdown(movie_ratings):
+    """
+    This function creates a dictionary mapping each rating to 
+    the number of times it appears
+    """
     split_lst = movie_ratings.split(",")
     rating_breakdown_count = {}
 
@@ -76,7 +80,6 @@ def get_rating_breakdown(movie_ratings):
         else:
             rating_breakdown_count[rating_num] = 1
     key_value_list = get_keys_and_values(rating_breakdown_count,'rating','count')
-    print key_value_list
     return key_value_list
 
 

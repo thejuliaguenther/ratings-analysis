@@ -10,6 +10,7 @@
 <div id="word-cloud"></div>
 <div id="time-graph">
 </div>
+<div id="rating-count-chart"></div>
 
 <div id="chart"</div>
 
@@ -482,21 +483,23 @@ function renderRatingsPieChart() {
         radius = Math.min(width, height) / 2;
         
         var color = d3.scale.ordinal()
-        .range(["#67E40F", "#0CB577", "#387BB8", "#67E40F", "#0CB577", "#387BB8", "#67E40F","#67E40F,""#67E40F","#67E40F","#67E40F"]);
-        
+        .range();
+        // .range(["#67E40F", "#0CB577", "#387BB8", "#67E40F", "#0CB577", "#387BB8", "#67E40F","#67E40F,""#67E40F"]);
+
         var arc = d3.svg.arc()
         .outerRadius(radius - 10)
         .innerRadius(0);
         var pie = d3.layout.pie()
             .sort(null)
             .value(function(d) { return d.count; });
-        var svg2 = d3.select("#supportchart").append("svg")
+        var svg2 = d3.select("#rating-count-chart").append("svg")
             .attr("width", width)
             .attr("height", height)
             .attr("align","center")
             .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-        json_route = "/tickets_by_tier.json?" + $('#ticket-ranges').serialize();
+        
+        json_route = "/rating_counts.json/" + movie_to_graph;
         
         d3.json(json_route, 
            function(error, data) {
@@ -506,16 +509,16 @@ function renderRatingsPieChart() {
                       .attr("class", "arc");
                   g.append("path")
                       .attr("d", arc)
-                      .style("fill", function(d) { return color(d.data.support_tier); });
+                      .style("fill", function(d) { return color(d.data.rating); });
                   g.append("text")
                       .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
                       .attr("dy", ".35em")
                       .style("text-anchor", "middle")
                       .style("font-family", 'Source Sans Pro', 'sans-serif')
-                      .text(function(d) { return d.data.support_tier; });
+                      .text(function(d) { return d.data.rating; });
         });
       }
-
+renderRatingsPieChart();
 
 </script>
 {% endblock %}
