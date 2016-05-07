@@ -4,9 +4,9 @@ import redis
 
 import json 
 
-from store import r1,r2, r3, r4, r5, movie_json,tag_json
+from store import r1,r2, r3, r4, r5,r6, movie_json,tag_json
 
-from app import remove_duplicate_tags, process_timestamps
+from app import remove_duplicate_tags, process_timestamps, get_rating_breakdown
 
 from jinja2 import StrictUndefined
 
@@ -19,8 +19,8 @@ app.jinja_env.undefined = StrictUndefined
 
 
 @app.route('/', methods=["GET"])
-""" Loads the main index page with search bar """
 def index():
+    """ Loads the main index page with search bar """
     return render_template("index.html")
 
 @app.route('/find_movie', methods=["POST"])
@@ -74,6 +74,14 @@ def get_timestamp_counts(movie_id):
 
     return jsonify(data=ratings_per_month_and_year)
 
+@app.route('/rating_counts.json/<movie_id>', methods=["GET"])
+def get_rating_counts(movie_id):
+    """ Gets the json showing the number of ratings per month """  
+    movie_ratings = r6.get(str(movie_id))
+
+    rating_breakdown = get_rating_breakdown(movie_ratings)
+
+    return jsonify(data=rating_breakdown)
 
 @app.route('/clusters', methods=["GET"])
 def display_clusters():

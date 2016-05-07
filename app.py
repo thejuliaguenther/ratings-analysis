@@ -24,7 +24,7 @@ def remove_duplicate_tags(lst):
 
 def process_timestamps(rating_dates):
     """
-    This function creates a dictionary mapping tuples containing the month and year of a timestamp 
+    This function creates a dictionary mapping the month and year of a timestamp 
     with the number of occurrences of that month and year 
     """
     split_lst = rating_dates.split(",")
@@ -42,7 +42,7 @@ def process_timestamps(rating_dates):
             month_year_count[new_date] += 1
         else:
             month_year_count[new_date] = 1
-    key_value_list = get_keys_and_values(month_year_count)
+    key_value_list = get_keys_and_values(month_year_count,'date','count')
     sorted_list = sort_list(key_value_list)
     print sorted_list
     return sorted_list
@@ -53,10 +53,26 @@ def get_key(item):
 def sort_list(key_value_list):
     return sorted(key_value_list, key=get_key)
 
-def get_keys_and_values(count_dict):
+def get_keys_and_values(count_dict, key1, key2):
     result = []
     for key in count_dict:
-        pair = {'date':key, 'count':count_dict[key]}
+        pair = {key1:key, key2:count_dict[key]}
         result.append(pair)
     return result 
+
+def get_rating_breakdown(movie_ratings):
+    split_lst = movie_ratings.split(",")
+    rating_breakdown_count = {}
+
+    for i in xrange(len(split_lst)):
+        curr_rating = split_lst[i]
+
+        if curr_rating in rating_breakdown_count:
+            rating_breakdown_count[curr_rating] += 1
+        else:
+            rating_breakdown_count[curr_rating] = 1
+    key_value_list = get_keys_and_values(rating_breakdown_count,'rating','count')
+    print key_value_list
+    return key_value_list
+
 
