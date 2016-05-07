@@ -107,6 +107,8 @@ mappedTotalRatings = totalRatingRowsRdd.map(lambda x: (str(x.movieId),[str(x.rat
 total = mappedTotalRatings.reduceByKey(lambda a,b: a+b)
 totalRatingsDict = total.collectAsMap()
 
+print totalRatingsDict
+
 
 # ratings_map = {}
 

@@ -58,11 +58,22 @@ for time in time_json:
         time_json[time][seconds] = ascii_seconds
     r5.set(str(time), str(time_json[time]))
 
-# r6 = redis.StrictRedis(host='localhost', port=6379, db=5)
+r6 = redis.StrictRedis(host='localhost', port=6379, db=5)
 
-# rating_counts_data = open("rating_counts.json").read()
-# rating_counts_to_load = rating_counts_data.encode('ascii', 'ignore')
-# rating_counts_json = json.loads(rating_counts_to_load)
+rating_counts_data = open("rating_counts.json").read()
+rating_counts_to_load = rating_counts_data.encode('ascii', 'ignore')
+rating_counts_json = json.loads(rating_counts_to_load)
+
+
+for item in rating_counts_json:
+    encoded_item = rating_counts_json[item].encode('ascii', 'ignore')
+    for movie_rating in xrange(len(rating_counts_json)):
+        encoded_rating = rating_counts_json[item][movie_rating].encode('ascii', 'ignore')
+        r6.set(str(encoded_item), str(encoded_rating))
+r6.flushdb()
+
+
+
 
 # for movie_id in xrange(len(rating_counts_json)):
 #     ratings_per_movie = []
@@ -74,7 +85,7 @@ for time in time_json:
 #         print encoded_count
 #         ratings_per_movie.append((encoded_rating, encoded_count))
 #     # r6.set(str(movie_id), ratings_per_movie)
-    # print r6.get(movie_id)
+#     print r6.get(movie_id)
 
 
 
