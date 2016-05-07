@@ -19,11 +19,16 @@ app.jinja_env.undefined = StrictUndefined
 
 
 @app.route('/', methods=["GET"])
+""" Loads the main index page with search bar """
 def index():
     return render_template("index.html")
 
 @app.route('/find_movie', methods=["POST"])
 def find_movie():
+    """ 
+    Renders the page showing data on a specific movie when the user searches  
+    for that movie_id
+    """   
     movie_name = request.form.get("movie_name")
     print "MOVIE NAME"
     print movie_name
@@ -37,6 +42,7 @@ def find_movie():
 
 @app.route('/movies', methods=["GET"])
 def display_movies():
+    """ Renders the page containing a list of movies """
     movie_list = []
     for i in movie_json:
         value = r1.get(str(i))
@@ -46,6 +52,10 @@ def display_movies():
 @app.route('/movie_detail/<movie_id>', methods=["GET"])
 @app.route('/movie_detail/', methods=["GET"])
 def show_movie_tags(movie_id):
+    """ 
+    Renders the page showing data on a specific movie when the user clicks on 
+    from the movie list page
+    """  
     movie_title = r1.get(str(movie_id))
     movie_tags = r2.get(str(movie_id))
 
@@ -57,6 +67,7 @@ def show_movie_tags(movie_id):
 
 @app.route('/timestamp_counts.json/<movie_id>', methods=["GET"])
 def get_timestamp_counts(movie_id):
+    """ Gets the json showing the number of ratings per month """   
     rating_dates = r5.get(str(movie_id))
 
     ratings_per_month_and_year = process_timestamps(rating_dates)
@@ -66,6 +77,7 @@ def get_timestamp_counts(movie_id):
 
 @app.route('/clusters', methods=["GET"])
 def display_clusters():
+    """ Renders the clusters page """
     return render_template("clusters.html")
 
 if __name__ == "__main__":
