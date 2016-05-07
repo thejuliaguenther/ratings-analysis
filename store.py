@@ -74,30 +74,6 @@ for item in rating_counts_json:
         encoded_ratings_per_movie.append(non_encoded_rating.encode('ascii', 'ignore'))
     r6.set(str(encoded_item), encoded_ratings_per_movie)
 
-    print r6.get(encoded_item)
-
-    # for movie_rating in xrange(len(rating_counts_json)):
-    #     encoded_rating = rating_counts_json[item][movie_rating].encode('ascii', 'ignore')
-    #     r6.set(str(encoded_item), str(encoded_rating))
-
-# print r6
-
-
-
-
-
-
-# for movie_id in xrange(len(rating_counts_json)):
-#     ratings_per_movie = []
-#     print movie_id
-#     for j in xrange(len(rating_counts_json[movie_id])):
-#         encoded_rating = rating_counts_json[movie_id].encode('ascii', 'ignore')
-#         print encoded_rating
-#         encoded_count = rating_counts_json[movie_id][j].encode('ascii', 'ignore')
-#         print encoded_count
-#         ratings_per_movie.append((encoded_rating, encoded_count))
-#     # r6.set(str(movie_id), ratings_per_movie)
-#     print r6.get(movie_id)
 
 
 
