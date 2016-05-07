@@ -66,11 +66,15 @@ def get_rating_breakdown(movie_ratings):
 
     for i in xrange(len(split_lst)):
         curr_rating = split_lst[i]
+        rating_digit_str = ''.join([x for x in curr_rating if x in '1234567890.'])
+        print rating_digit_str
+
+        rating_num = float(rating_digit_str)
 
         if curr_rating in rating_breakdown_count:
-            rating_breakdown_count[curr_rating] += 1
+            rating_breakdown_count[rating_num] += 1
         else:
-            rating_breakdown_count[curr_rating] = 1
+            rating_breakdown_count[rating_num] = 1
     key_value_list = get_keys_and_values(rating_breakdown_count,'rating','count')
     print key_value_list
     return key_value_list
