@@ -5,14 +5,14 @@
 
 <h2>Total Ratings: {{num_ratings}}</h2>
 
-<h2> Rating times: </h2>
-
 <div id="word-cloud"></div>
 <div id="time-graph">
+  <h2> Ratings Per Month</h2>
 </div>
 <div id="rating-count-chart"></div>
 
-<div id="chart"</div>
+<div id="chart">
+</div>
 
 <script src='/static/js/c3-0.4.11/c3.js'></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
@@ -463,16 +463,26 @@ function renderTimestampGraph(){
           xFormat: '%Y-%m',
           columns: [months, counts]
         },
-          axis: {
-            x: {
-                type: 'timeseries',
-                tick: {
-                    format: '%Y-%m'
-                }
-            }
+        axis: {
+          x: {
+              type: 'timeseries',
+              tick: {
+                  format: '%Y-%m'
+              },
+              label: { 
+                text: 'Month',
+                position: 'outer-middle'
+              }
+          },
+          y: {
+              label: { 
+                text: '# of Ratings',
+                position: 'outer-middle'
+              }
+          }
         }
-      });
-  });
+    });
+});
 }
 
 
@@ -527,14 +537,8 @@ function renderRatingsPieChart() {
                       .on('mouseover', tip.show)
                       .on('mouseout', tip.hide)
         });
-                  // g.append("text")
-                  //     .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-                  //     .attr("dy", ".35em")
-                  //     .style("text-anchor", "middle")
-                  //     .style("font-family", 'Source Sans Pro', 'sans-serif')
-                  //     .text(function(d) { return d.data.count; });
                   
-        }
+  }
       
 renderRatingsPieChart();
 
