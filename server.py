@@ -45,8 +45,8 @@ def display_movies():
     """ Renders the page containing a list of movies """
     movie_list = []
     for i in movie_json:
-        value = r1.get(str(i))
-        movie_list.append((i,value))
+        value = r1.get(str(i[0]))
+        movie_list.append((i[0],value))
     return render_template("movie.html", movie_list=movie_list)
 
 @app.route('/movie_detail/<movie_id>', methods=["GET"])

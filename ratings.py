@@ -59,7 +59,18 @@ movieRowsRdd = movieRows.rdd
 mappedMovies = movieRowsRdd.map(lambda x: (str(x.movieId), str(x.title)))
 movieDict = mappedMovies.sortBy(lambda x: x[1]).collect()
 
-print movieDict
+# split_title = title.split(" ")
+
+# def containsArticle(title):
+#     if split_title[0] == 'A' or split_title[0] == 'An' or split_title[0] == 'The':
+#         getArticle(split_title[0])
+#         return True
+#     else:
+#         return False
+
+# def getArticle(artcle):
+#     return article
+# print movieDict
 
 
 # mappedTitles = movieRowsRdd.map(lambda x: (str(x.title)[:-6],str(x.movieId)))
@@ -67,8 +78,8 @@ print movieDict
 
 
 
-# movieFile = open('movies.json', 'w')
-# movieJSON =  json.dump(movieDict, movieFile)
+movieFile = open('movies.json', 'w')
+movieJSON =  json.dump(movieDict, movieFile)
 
 
 # # # Save the tags to a JSON file 
