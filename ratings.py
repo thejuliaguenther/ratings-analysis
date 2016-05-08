@@ -51,13 +51,15 @@ tagsDF.registerTempTable("tags")
 # combinedTags = mappedTags.reduceByKey(lambda a,b: a+b)
 # tagDict = combinedTags.collectAsMap()
 
-# # print tagDict
+# print tagDict
 
-# movieRows = sqlContext.sql("SELECT movieId, title from movies")
-# movieRowsRdd = movieRows.rdd
+movieRows = sqlContext.sql("SELECT movieId, title from movies")
+movieRowsRdd = movieRows.rdd
 
-# mappedMovies = movieRowsRdd.map(lambda x: (str(x.movieId),str(x.title)))
-# movieDict = mappedMovies.collectAsMap()
+mappedMovies = movieRowsRdd.map(lambda x: (str(x.movieId), str(x.title)))
+movieDict = mappedMovies.sortBy(lambda x: x[1]).collect()
+
+print movieDict
 
 
 # mappedTitles = movieRowsRdd.map(lambda x: (str(x.title)[:-6],str(x.movieId)))
@@ -100,14 +102,14 @@ tagsDF.registerTempTable("tags")
 # timestampsPerMovieFile = open('timestamps_per_movie.json', 'w')
 # timestampsPerMovieJSON =  json.dump(timestampsPerMovieDict, timestampsPerMovieFile)
 
-totalRatingRows = sqlContext.sql("SELECT movieId, rating from ratings")
-totalRatingRowsRdd = totalRatingRows.rdd
+# totalRatingRows = sqlContext.sql("SELECT movieId, rating from ratings")
+# totalRatingRowsRdd = totalRatingRows.rdd
 
-mappedTotalRatings = totalRatingRowsRdd.map(lambda x: (str(x.movieId),[str(x.rating)]))
-total = mappedTotalRatings.reduceByKey(lambda a,b: a+b)
-totalRatingsDict = total.collectAsMap()
+# mappedTotalRatings = totalRatingRowsRdd.map(lambda x: (str(x.movieId),[str(x.rating)]))
+# total = mappedTotalRatings.reduceByKey(lambda a,b: a+b)
+# totalRatingsDict = total.collectAsMap()
 
-print totalRatingsDict
+# print totalRatingsDict
 
 
 # ratings_map = {}
@@ -124,8 +126,8 @@ print totalRatingsDict
 # print ratings_map
 
 
-mappedTotalRatingsFile = open('rating_counts.json', 'w')
-mappedTotalRatingsJSON = json.dump(totalRatingsDict, mappedTotalRatingsFile)
+# mappedTotalRatingsFile = open('rating_counts.json', 'w')
+# mappedTotalRatingsJSON = json.dump(totalRatingsDict, mappedTotalRatingsFile)
 
 
 
