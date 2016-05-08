@@ -483,7 +483,7 @@ function renderRatingsPieChart() {
         radius = Math.min(width, height) / 2;
         
         var color = d3.scale.ordinal()
-        .range();
+        .range(["#B14C75", "#7C3C87", "#8CBC51", "#27C893", "#E6F769", "#D95D8F", "#53285B", "#ABE662", "#BCC957", "#359D7B", "#2EAF85"]);
         // .range(["#67E40F", "#0CB577", "#387BB8", "#67E40F", "#0CB577", "#387BB8", "#67E40F","#67E40F,""#67E40F"]);
 
         var div = d3.select("body").append("div") 
