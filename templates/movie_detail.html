@@ -486,6 +486,10 @@ function renderRatingsPieChart() {
         .range();
         // .range(["#67E40F", "#0CB577", "#387BB8", "#67E40F", "#0CB577", "#387BB8", "#67E40F","#67E40F,""#67E40F"]);
 
+        var div = d3.select("body").append("div") 
+          .attr("class", "tooltip")       
+          .style("opacity", 0);
+
         var arc = d3.svg.arc()
         .outerRadius(radius - 10)
         .innerRadius(0);
@@ -509,13 +513,13 @@ function renderRatingsPieChart() {
                       .attr("class", "arc");
                   g.append("path")
                       .attr("d", arc)
-                      .style("fill", function(d) { return color(d.data.rating); });
+                      .style("fill", function(d) { return color(d.data.count); });
                   g.append("text")
                       .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
                       .attr("dy", ".35em")
                       .style("text-anchor", "middle")
                       .style("font-family", 'Source Sans Pro', 'sans-serif')
-                      .text(function(d) { return d.data.rating; });
+                      .text(function(d) { return d.data.count; });
         });
       }
 renderRatingsPieChart();
