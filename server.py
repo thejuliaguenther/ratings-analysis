@@ -49,6 +49,12 @@ def display_movies():
         movie_list.append((i[0],value))
     return render_template("movie.html", movie_list=movie_list)
 
+@app.route('/movies/<letter>', methods=["GET"])
+def show_movies_by_letter(letter):
+    movies_with_letter = r1.get(letter)
+
+    return render_template("movie.html", movie_list=movies_with_letter)
+
 @app.route('/movie_detail/<movie_id>', methods=["GET"])
 @app.route('/movie_detail/', methods=["GET"])
 def show_movie_tags(movie_id):
