@@ -83,7 +83,6 @@ def get_rating_breakdown(movie_ratings):
 
 def get_first_letter(string):
     split_str = string.split(" ")
-    print split_str
     first_letter = ' '
     if split_str[0] == 'The' or split_str[0] == 'An' or split_str[0] == 'A':
         # If the first word is an article, use the second word when ordering words

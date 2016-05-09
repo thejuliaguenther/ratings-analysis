@@ -4,9 +4,9 @@ import redis
 
 import json 
 
-from store import r1,r2, r3, r4, r5,r6, movie_json,tag_json
+from store import r1,r2, r3, r4, r5,r6,r7, movie_json,tag_json
 
-from app import remove_duplicate_tags, process_timestamps, get_rating_breakdown
+from app import remove_duplicate_tags, process_timestamps, get_rating_breakdown, get_first_letter
 
 from jinja2 import StrictUndefined
 
@@ -56,7 +56,7 @@ def show_movie_tags(movie_id):
     Renders the page showing data on a specific movie when the user clicks on 
     from the movie list page
     """  
-    movie_title = r1.get(str(movie_id))
+    movie_title = r7.get(str(movie_id))
     movie_tags = r2.get(str(movie_id))
 
     unique_tags = remove_duplicate_tags(movie_tags)
