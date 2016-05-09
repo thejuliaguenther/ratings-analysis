@@ -2,14 +2,25 @@ import redis
 
 import json 
 
+from app import get_first_letter
+
 r1 = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 movie_data = open("movies.json").read()
 movies_to_load = movie_data.encode('ascii', 'ignore')
 movie_json = json.loads(movies_to_load)
 
+letters_to_movies = {}
 for line in movie_json:
-    r1.set(str(line[0]), str(line[1]))
+    encoded_id = line[0].encode('ascii', 'ignore')
+    encoded_title = line[1].encode('ascii', 'ignore')
+    first_letter = get_first_letter(encoded_title)
+    letters_to_movies[first_letter] = (encoded_id, encoded_title)
+
+for letter in letters_to_movies:
+    r1.hmset(letter, letters_to_movies[letter])
+
+print r1
     
 r2 = redis.StrictRedis(host='localhost', port=6379, db=1)
 

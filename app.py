@@ -44,7 +44,6 @@ def process_timestamps(rating_dates):
             month_year_count[new_date] = 1
     key_value_list = get_keys_and_values(month_year_count,'date','count')
     sorted_list = sort_list(key_value_list)
-    print sorted_list
     return sorted_list
 
 def get_key(item):
@@ -80,7 +79,32 @@ def get_rating_breakdown(movie_ratings):
         #     rating_breakdown_count[rating_num] = 1
         rating_breakdown_count[rating_digit_str] += 1
     key_value_list = get_keys_and_values(rating_breakdown_count,'rating','count')
-    print key_value_list
     return key_value_list
+
+def get_first_letter(string):
+    split_str = string.split(" ")
+    print split_str
+    first_letter = ' '
+    if split_str[0] == 'The' or split_str[0] == 'An' or split_str[0] == 'A':
+        # If the first word is an article, use the second word when ordering words
+        first_letter = split_str[1][0]
+    elif not split_str[0][0].isalnum():
+        i = 0
+        while string[i].isalpha() and not string[i].isupper():
+            i += 1
+
+            if string[i].isupper():
+                first_letter = string[i]
+                break
+            else:
+                if len(split_str[0]) > 1:
+                    first_letter = split_str[0][1]
+    else:
+        if len(split_str[0]) > 1:
+            first_letter = split_str[0][1]
+        else:
+            first_letter = split_str[0][0]
+
+    return first_letter
 
 
