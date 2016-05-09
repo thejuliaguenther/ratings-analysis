@@ -100,10 +100,7 @@ def get_first_letter(string):
                 if len(split_str[0]) > 1:
                     first_letter = split_str[0][1]
     else:
-        if len(split_str[0]) > 1:
-            first_letter = split_str[0][1]
-        else:
-            first_letter = split_str[0][0]
+      first_letter = split_str[0][0]
 
     return first_letter
 

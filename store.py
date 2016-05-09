@@ -15,12 +15,16 @@ for line in movie_json:
     encoded_id = line[0].encode('ascii', 'ignore')
     encoded_title = line[1].encode('ascii', 'ignore')
     first_letter = get_first_letter(encoded_title)
-    letters_to_movies[first_letter] = (encoded_id, encoded_title)
+
+    if first_letter in letters_to_movies:
+        letters_to_movies[first_letter].append({encoded_id: encoded_title})
+    else:
+        letters_to_movies[first_letter] = [{encoded_id: encoded_title}]
 
 for letter in letters_to_movies:
-    r1.hmset(letter, letters_to_movies[letter])
+    r1.set(letter, letters_to_movies[letter])
+    print r1.get(letter)
 
-print r1
     
 r2 = redis.StrictRedis(host='localhost', port=6379, db=1)
 
