@@ -91,13 +91,12 @@ r8 = redis.StrictRedis(host='localhost', port=6379, db=7)
 
 for x in movie_json:
     movie_name = x[1]
-    print movie_name
     for letter in xrange(len(movie_name[0:-7])):
         prefix = movie_name[0:letter]
         r8.zadd('substrings',0,prefix)
     r8.zadd('substrings',0,movie_name+'*')
 
-print r8.keys()
+# print r8.zrange('substrings',0,25)
 
 
 
