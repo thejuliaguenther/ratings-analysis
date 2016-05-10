@@ -87,6 +87,19 @@ movie_letter_data = open("movies-and-letters.json").read()
 movies__letters_to_load = movie_letter_data.encode('ascii', 'ignore')
 movie_letter_json = json.loads(movies__letters_to_load)
 
+r8 = redis.StrictRedis(host='localhost', port=6379, db=7)
+
+for x in movie_json:
+    movie_name = x[1]
+    print movie_name
+    for letter in xrange(len(movie_name[0:-7])):
+        prefix = movie_name[0:letter]
+        r8.zadd('substrings',0,prefix)
+    r8.zadd('substrings',0,movie_name+'*')
+
+print r8.keys()
+
+
 
 
 

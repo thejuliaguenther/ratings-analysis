@@ -16,10 +16,15 @@
 #word-cloud{
   margin: 50px;
 }
-.btn-default{
+
+{
   width: 10px;
   height: 10px;
 }
+
+.ui-autocomplete-loading {
+    background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
+  }
 
 @media only screen and (min-width: 768px) {
   .page-navbar {

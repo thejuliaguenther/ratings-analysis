@@ -54,6 +54,11 @@ def display_movies():
         movie_list.append((i[0],value))
     return render_template("movie.html", movie_list=movie_list)
 
+@app.route('/autocomplete.json', methods=["GET"])
+def get_autocomplete():
+    query = request.args.get('query')
+    # id = 
+
 @app.route('/movies/<letter>', methods=["GET"])
 @app.route('/movies', methods=["GET"])
 def show_movies_by_letter(letter=" "):
