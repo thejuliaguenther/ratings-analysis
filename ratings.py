@@ -65,7 +65,7 @@ movieDict = mappedMovies.sortBy(lambda x: x[1]).collect()
 for movie in movieDict:
     first_letter = get_first_letter(movie[1])
     if first_letter in letters_to_movies:
-        letters_to_movies[first_letter].append((movie[1], movie[1]))
+        letters_to_movies[first_letter].append((movie[0], movie[1]))
     else:
         letters_to_movies[first_letter] = [(movie[0], movie[1])]
 

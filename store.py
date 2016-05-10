@@ -5,7 +5,6 @@ import json
 from app import get_first_letter
 
 r1 = redis.StrictRedis(host='localhost', port=6379, db=0)
-r7 = redis.StrictRedis(host='localhost', port=6379, db=6)
 
 movie_data = open("movies.json").read()
 movies_to_load = movie_data.encode('ascii', 'ignore')
@@ -16,15 +15,15 @@ for line in movie_json:
     encoded_id = line[0].encode('ascii', 'ignore')
     encoded_title = line[1].encode('ascii', 'ignore')
     first_letter = get_first_letter(encoded_title)
-    r7.set(str(encoded_id), str(encoded_title))
+    r1.set(str(encoded_id), str(encoded_title))
 
-    if first_letter in letters_to_movies:
-        letters_to_movies[first_letter].append((encoded_id, encoded_title))
-    else:
-        letters_to_movies[first_letter] = [(encoded_id, encoded_title)]
+#     if first_letter in letters_to_movies:
+#         letters_to_movies[first_letter].append((encoded_id, encoded_title))
+#     else:
+#         letters_to_movies[first_letter] = [(encoded_id, encoded_title)]
 
-for letter in letters_to_movies:
-    r1.set(letter, letters_to_movies[letter])
+# for letter in letters_to_movies:
+#     r.set(letter, letters_to_movies[letter])
     
 r2 = redis.StrictRedis(host='localhost', port=6379, db=1)
 
@@ -88,6 +87,12 @@ for item in rating_counts_json:
     for non_encoded_rating in ratings_to_encode:
         encoded_ratings_per_movie.append(non_encoded_rating.encode('ascii', 'ignore'))
     r6.set(str(encoded_item), encoded_ratings_per_movie)
+
+r7 = redis.StrictRedis(host='localhost', port=6379, db=6)
+
+movie_letter_data = open("movies-and-letters.json").read()
+movies__letters_to_load = movie_letter_data.encode('ascii', 'ignore')
+movie_letter_json = json.loads(movies__letters_to_load)
 
 
 

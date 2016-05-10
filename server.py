@@ -6,7 +6,7 @@ import json
 
 import re
 
-from store import r1,r2, r3, r4, r5,r6,r7, movie_json,tag_json
+from store import r1,r2, r3, r4, r5,r6,r7, movie_json,tag_json, movie_letter_json
 
 from app import remove_duplicate_tags, process_timestamps, get_rating_breakdown, get_first_letter
 
@@ -49,14 +49,20 @@ def display_movies():
 
 @app.route('/movies/<letter>', methods=["GET"])
 def show_movies_by_letter(letter):
-    movies_with_letter = r1.get(letter)
+    # movies_with_letter = r1.get(letter)
 
+    # print movies_with_letter
+    # print type(movies_with_letter)
+
+    # split_movies = re.split(r',\s*(?=[^)]*(?:\(|$))', movies_with_letter)
+    movies_with_letter = []
+
+    movie_letter_list = movie_letter_json[letter]
+
+    for i in movie_letter_list:
+        value = r1.get(str(i[0]))
+        movies_with_letter.append((i[0],value))
     print movies_with_letter
-    print type(movies_with_letter)
-
-    split_movies = re.split(r',\s*(?=[^)]*(?:\(|$))', movies_with_letter)
-
-    
     
 
     return render_template("movie.html", movie_list=movies_with_letter)
