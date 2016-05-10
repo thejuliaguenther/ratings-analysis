@@ -74,6 +74,8 @@ for movie in movieDict:
 movieFile = open('movies.json', 'w')
 movieJSON =  json.dump(movieDict, movieFile)
 
+moviesAndLettersFile = open('movies-and-letters.json', 'w')
+moviesAndLettersJSON =  json.dump(letters_to_movies, moviesAndLettersFile)
 
 # # # Save the tags to a JSON file 
 # tagFile = open('tags.json', 'w')
