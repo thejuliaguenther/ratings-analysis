@@ -49,14 +49,12 @@ def display_movies():
 
 @app.route('/movies/<letter>', methods=["GET"])
 def show_movies_by_letter(letter):
-    # movies_with_letter = r1.get(letter)
 
-    # print movies_with_letter
-    # print type(movies_with_letter)
-
-    # split_movies = re.split(r',\s*(?=[^)]*(?:\(|$))', movies_with_letter)
     movies_with_letter = []
 
+    if letter == '#':
+        letter = " "
+    
     movie_letter_list = movie_letter_json[letter]
 
     for i in movie_letter_list:
