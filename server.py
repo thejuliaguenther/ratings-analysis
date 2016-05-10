@@ -38,7 +38,7 @@ def find_movie():
 
     return redirect(url_for('show_movie_tags', movie_id=str(movie_id)))
 
-@app.route('/movies', methods=["GET"])
+@app.route('/movies/view-all', methods=["GET"])
 def display_movies():
     """ Renders the page containing a list of movies """
     movie_list = []
@@ -48,11 +48,13 @@ def display_movies():
     return render_template("movie.html", movie_list=movie_list)
 
 @app.route('/movies/<letter>', methods=["GET"])
-def show_movies_by_letter(letter):
+@app.route('/movies', methods=["GET"])
+def show_movies_by_letter(letter=" "):
 
     movies_with_letter = []
 
-    if letter == '#':
+
+    if letter.isdigit():
         letter = " "
     
     movie_letter_list = movie_letter_json[letter]

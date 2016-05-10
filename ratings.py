@@ -69,6 +69,8 @@ for movie in movieDict:
     else:
         letters_to_movies[first_letter] = [(movie[0], movie[1])]
 
+print letters_to_movies.keys()
+
 
 
 movieFile = open('movies.json', 'w')
