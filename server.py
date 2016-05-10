@@ -19,6 +19,13 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", "GHIKLMNO")
 
 app.jinja_env.undefined = StrictUndefined
 
+def get_movies_with_letter(movies_with_letter, letter):
+    movie_letter_list = movie_letter_json[letter]
+
+    for i in movie_letter_list:
+        value = r1.get(str(i[0]))
+        movies_with_letter.append((i[0],value))
+    return movies_with_letter
 
 @app.route('/', methods=["GET"])
 def index():
@@ -54,15 +61,15 @@ def show_movies_by_letter(letter=" "):
     movies_with_letter = []
 
 
-    if letter.isdigit():
-        letter = " "
-    
-    movie_letter_list = movie_letter_json[letter]
+    if letter == " ":
+        values_to_add = []
+        keys_to_add = [' ', "'", '(', '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-    for i in movie_letter_list:
-        value = r1.get(str(i[0]))
-        movies_with_letter.append((i[0],value))
-    print movies_with_letter
+        for key in keys_to_add:
+            movies_with_letter = get_movies_with_letter(movies_with_letter, key)
+    else:
+
+        movies_with_letter = get_movies_with_letter(movies_with_letter, letter)
     
 
     return render_template("movie.html", movie_list=movies_with_letter)
