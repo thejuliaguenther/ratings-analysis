@@ -69,25 +69,6 @@ for movie in movieDict:
     else:
         letters_to_movies[first_letter] = [(movie[0], movie[1])]
 
-print letters_to_movies
-
-# split_title = title.split(" ")
-
-# def containsArticle(title):
-#     if split_title[0] == 'A' or split_title[0] == 'An' or split_title[0] == 'The':
-#         getArticle(split_title[0])
-#         return True
-#     else:
-#         return False
-
-# def getArticle(artcle):
-#     return article
-# print movieDict
-
-
-# mappedTitles = movieRowsRdd.map(lambda x: (str(x.title)[:-6],str(x.movieId)))
-# titleDict = mappedTitles.collectAsMap()
-
 
 
 movieFile = open('movies.json', 'w')
