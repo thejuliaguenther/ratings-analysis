@@ -2,6 +2,7 @@ from pyspark.sql import SQLContext
 from pyspark.sql.types import *
 from pyspark import SparkConf, SparkContext
 from pyspark.mllib.clustering import KMeans, KMeansModel
+from app import get_first_letter
 import numpy as np
 from math import sqrt
 import json 
@@ -53,11 +54,22 @@ tagsDF.registerTempTable("tags")
 
 # print tagDict
 
+letters_to_movies = {}
+
 movieRows = sqlContext.sql("SELECT movieId, title from movies")
 movieRowsRdd = movieRows.rdd
 
 mappedMovies = movieRowsRdd.map(lambda x: (str(x.movieId), str(x.title)))
 movieDict = mappedMovies.sortBy(lambda x: x[1]).collect()
+
+for movie in movieDict:
+    first_letter = get_first_letter(movie[1])
+    if first_letter in letters_to_movies:
+        letters_to_movies[first_letter].append((movie[1], movie[1]))
+    else:
+        letters_to_movies[first_letter] = [(movie[0], movie[1])]
+
+print letters_to_movies
 
 # split_title = title.split(" ")
 

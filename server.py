@@ -4,6 +4,8 @@ import redis
 
 import json 
 
+import re
+
 from store import r1,r2, r3, r4, r5,r6,r7, movie_json,tag_json
 
 from app import remove_duplicate_tags, process_timestamps, get_rating_breakdown, get_first_letter
@@ -30,13 +32,9 @@ def find_movie():
     for that movie_id
     """   
     movie_name = request.form.get("movie_name")
-    print "MOVIE NAME"
-    print movie_name
 
     #TODO Exception Handiling 
     movie_id = r3.get(str(movie_name))
-    print "ID"
-    print movie_id
 
     return redirect(url_for('show_movie_tags', movie_id=str(movie_id)))
 
@@ -52,6 +50,14 @@ def display_movies():
 @app.route('/movies/<letter>', methods=["GET"])
 def show_movies_by_letter(letter):
     movies_with_letter = r1.get(letter)
+
+    print movies_with_letter
+    print type(movies_with_letter)
+
+    split_movies = re.split(r',\s*(?=[^)]*(?:\(|$))', movies_with_letter)
+
+    
+    
 
     return render_template("movie.html", movie_list=movies_with_letter)
 
