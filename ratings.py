@@ -44,13 +44,13 @@ tagsSchema = StructType([ \
 tagsDF = sqlContext.read.format('com.databricks.spark.csv').options(quote="\"").load('./ml-20m/tags.csv', schema=tagsSchema)
 tagsDF.registerTempTable("tags")
 
-# tagLines = sqlContext.sql("SELECT userId, movieId, tag FROM tags")
-# tagLinesRdd = tagLines.rdd
+tagLines = sqlContext.sql("SELECT userId, movieId, tag FROM tags")
+tagLinesRdd = tagLines.rdd
 
-# mappedTags = tagLinesRdd.map(lambda x: (str(x.movieId),[str(x.tag)]))
+mappedTags = tagLinesRdd.map(lambda x: (str(x.movieId),[str(x.tag)]))
 
-# combinedTags = mappedTags.reduceByKey(lambda a,b: a+b)
-# tagDict = combinedTags.collectAsMap()
+combinedTags = mappedTags.reduceByKey(lambda a,b: a+b)
+tagDict = combinedTags.collectAsMap()
 
 # print tagDict
 
@@ -69,7 +69,7 @@ for movie in movieDict:
     else:
         letters_to_movies[first_letter] = [(movie[0], movie[1])]
 
-print letters_to_movies.keys()
+# print letters_to_movies.keys()
 
 
 
@@ -79,77 +79,75 @@ movieJSON =  json.dump(movieDict, movieFile)
 moviesAndLettersFile = open('movies-and-letters.json', 'w')
 moviesAndLettersJSON =  json.dump(letters_to_movies, moviesAndLettersFile)
 
-# # # Save the tags to a JSON file 
-# tagFile = open('tags.json', 'w')
-# tagJSON = json.dump(tagDict, tagFile)
+# # Save the tags to a JSON file 
+tagFile = open('tags.json', 'w')
+tagJSON = json.dump(tagDict, tagFile)
 
 
-# # Get the total number of ratings for a given movie 
-# ratingRows = sqlContext.sql("SELECT movieId, time_stamp from ratings")
-# ratingRowsRdd = ratingRows.rdd
-# # mappedRatings = ratingRowsRdd.map(lambda x: (str(x.movieId),str(x.time_stamp)))
-# # ratingDict = mappedRatings.countByKey()
-# numRatings = sorted(ratingRowsRdd.countByKey().items())
-# mappedRatings = {}
+# Get the total number of ratings for a given movie 
+ratingRows = sqlContext.sql("SELECT movieId, time_stamp from ratings")
+ratingRowsRdd = ratingRows.rdd
+# mappedRatings = ratingRowsRdd.map(lambda x: (str(x.movieId),str(x.time_stamp)))
+# ratingDict = mappedRatings.countByKey()
+numRatings = sorted(ratingRowsRdd.countByKey().items())
+mappedRatings = {}
 
-# for rated_movie in numRatings:
-#     mappedRatings[rated_movie[0]] = rated_movie[1]
+for rated_movie in numRatings:
+    mappedRatings[rated_movie[0]] = rated_movie[1]
 
-# ratingsFile = open('ratings.json', 'w')
-# ratingsJSON =  json.dump(mappedRatings, ratingsFile)
+ratingsFile = open('ratings.json', 'w')
+ratingsJSON =  json.dump(mappedRatings, ratingsFile)
 
-# timestampsPerMovie = ratingRowsRdd.map(lambda x: (str(x.movieId), [str(x.time_stamp)]))
-# combinedTimestampsPerMovie  = timestampsPerMovie.reduceByKey(lambda a,b: a+b)
+timestampsPerMovie = ratingRowsRdd.map(lambda x: (str(x.movieId), [str(x.time_stamp)]))
+combinedTimestampsPerMovie  = timestampsPerMovie.reduceByKey(lambda a,b: a+b)
 
-# # combinedTimestampsPerMovie = timestampsPerMovie.reduceByKey(lambda a,b: a+b)
-# timestampsPerMovieDict = combinedTimestampsPerMovie.collectAsMap()
+# combinedTimestampsPerMovie = timestampsPerMovie.reduceByKey(lambda a,b: a+b)
+timestampsPerMovieDict = combinedTimestampsPerMovie.collectAsMap()
 
 
-# # print timestampsPerMovieDict
+# print timestampsPerMovieDict
 
-# timestampsPerMovieFile = open('timestamps_per_movie.json', 'w')
-# timestampsPerMovieJSON =  json.dump(timestampsPerMovieDict, timestampsPerMovieFile)
+timestampsPerMovieFile = open('timestamps_per_movie.json', 'w')
+timestampsPerMovieJSON =  json.dump(timestampsPerMovieDict, timestampsPerMovieFile)
 
-# totalRatingRows = sqlContext.sql("SELECT movieId, rating from ratings")
-# totalRatingRowsRdd = totalRatingRows.rdd
+totalRatingRows = sqlContext.sql("SELECT movieId, rating from ratings")
+totalRatingRowsRdd = totalRatingRows.rdd
 
-# mappedTotalRatings = totalRatingRowsRdd.map(lambda x: (str(x.movieId),[str(x.rating)]))
-# total = mappedTotalRatings.reduceByKey(lambda a,b: a+b)
-# totalRatingsDict = total.collectAsMap()
+mappedTotalRatings = totalRatingRowsRdd.map(lambda x: (str(x.movieId),[str(x.rating)]))
+total = mappedTotalRatings.reduceByKey(lambda a,b: a+b)
+totalRatingsDict = total.collectAsMap()
 
 # print totalRatingsDict
 
 
-# ratings_map = {}
+ratings_map = {}
 
-# for movie_with_rating in totalRatingsDict:
-#     individual_rating_map = {}
-#     for value in totalRatingsDict[movie_with_rating]:
-#         if value in individual_rating_map:
-#             individual_rating_map[value] += 1
-#         else:
-#             individual_rating_map[value] = 1
-#     ratings_map[movie_with_rating] = individual_rating_map 
+for movie_with_rating in totalRatingsDict:
+    individual_rating_map = {}
+    for value in totalRatingsDict[movie_with_rating]:
+        if value in individual_rating_map:
+            individual_rating_map[value] += 1
+        else:
+            individual_rating_map[value] = 1
+    ratings_map[movie_with_rating] = individual_rating_map 
 
 # print ratings_map
 
 
-# mappedTotalRatingsFile = open('rating_counts.json', 'w')
-# mappedTotalRatingsJSON = json.dump(totalRatingsDict, mappedTotalRatingsFile)
+mappedTotalRatingsFile = open('rating_counts.json', 'w')
+mappedTotalRatingsJSON = json.dump(totalRatingsDict, mappedTotalRatingsFile)
 
 
+# Get the timestamps for ratings of each movie
+timestampRows = sqlContext.sql("SELECT movieId, tag, time_stamp from tags")
+timestampRowsRdd = timestampRows.rdd
 
+# Collect the id, tag, and time stamp for each rating 
+timestampRatings = timestampRowsRdd.map(lambda x: (str(x.movieId), (str(x.time_stamp), [str(x.tag)])))
+timestampRatingsDict = timestampRatings.collectAsMap()
 
-# # Get the timestamps for ratings of each movie
-# timestampRows = sqlContext.sql("SELECT movieId, tag, time_stamp from tags")
-# timestampRowsRdd = timestampRows.rdd
-
-# # Collect the id, tag, and time stamp for each rating 
-# timestampRatings = timestampRowsRdd.map(lambda x: (str(x.movieId), (str(x.time_stamp), [str(x.tag)])))
-# timestampRatingsDict = timestampRatings.collectAsMap()
-
-# timestampRatingsFile = open('timestamp_ratings.json', 'w')
-# timestampRatingsJSON = json.dump(timestampRatingsDict, timestampRatingsFile)
+timestampRatingsFile = open('timestamp_ratings.json', 'w')
+timestampRatingsJSON = json.dump(timestampRatingsDict, timestampRatingsFile)
 
 
 

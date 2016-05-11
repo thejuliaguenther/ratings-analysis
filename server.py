@@ -6,7 +6,7 @@ import json
 
 import re
 
-from store import r1,r2, r3, r4, r5,r6,r7, movie_json,tag_json, movie_letter_json
+from store import r1,r2, r3, r4, r5,r6,r7,r8, movie_json,tag_json, movie_letter_json
 
 from app import remove_duplicate_tags, process_timestamps, get_rating_breakdown, get_first_letter
 
@@ -18,6 +18,28 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "GHIKLMNO")
 
 app.jinja_env.undefined = StrictUndefined
+
+def autocomplete(prefix):
+    count =10
+    results = []
+    range_length = 50 
+    start = r8.zrank('compl',prefix)    
+    if not start:
+         return results
+    while (len(results) != count):         
+         values = r8.zrange('substrings',start,start+range_length-1)         
+         start += range_length
+         if not values or len(values) == 0:
+             break
+         for item in values:
+             min_len = min(len(item),len(prefix))             
+             if item[0:min_len] != prefix[0:min_len]:                
+                count = len(results)
+                break           
+             if item[-1] == "*" and len(results) != count:                 
+                results.append(item[0:-1])
+     
+    return results
 
 def get_movies_with_letter(movies_with_letter, letter):
     movie_letter_list = movie_letter_json[letter]
@@ -57,7 +79,10 @@ def display_movies():
 @app.route('/autocomplete.json', methods=["GET"])
 def get_autocomplete():
     query = request.args.get('query')
-    # id = 
+
+    autocomplete_results = autocomplete(query)
+
+    return jsonify(autocomplete_results=autocomplete_results)
 
 @app.route('/movies/<letter>', methods=["GET"])
 @app.route('/movies', methods=["GET"])

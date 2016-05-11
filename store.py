@@ -96,7 +96,6 @@ for x in movie_json:
         r8.zadd('substrings',0,prefix)
     r8.zadd('substrings',0,movie_name+'*')
 
-# print r8.zrange('substrings',0,25)
 
 
 
