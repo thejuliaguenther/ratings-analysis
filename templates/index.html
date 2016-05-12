@@ -19,7 +19,7 @@
 
     <!-- Custom CSS -->
     <link href="/static/css/clean-blog.min.css" rel="stylesheet">
-    <link href="/static/js/jquery-ui-1.11.4/jquery-ui.css" rel="stylesheet">
+    <link href="/static/css/jquery-ui.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
     <link href="/static/js/c3-0.4.11/c3.css" rel="stylesheet">
     <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
@@ -100,14 +100,20 @@
         </div>
     </div> -->
 
-    <div class="container">
+    <div class="ui-widget">
+    <label for="movie_name">Movie: </label>
+    <input id="movie_name", name="movie_name" />
+  </div>
+
+    <!-- <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ui-widget">
                 <form id="search-form" action="/find_movie", method="POST">
   <input type="text" class="form-control" placeholder="Movie Name" aria-describedby="basic-addon1" id="movie_name" name="movie_name">
   <input id="search" class="btn btn-sm" type="submit" value="Search for a Movie">
-  <input id="view-clusters" class="btn btn-sm" type="submit" value="View Clusters">
-</form>
+  <input id="view-clusters" class="btn btn-sm" type="submit" value="View Clusters"> -->
+
+<!-- </form> -->
                 
             </div>
         </div>
@@ -133,6 +139,7 @@
                 query: request.term, // in flask, "q" will be the argument to look for using request.args
             }, function(data) {
                 response(data.autocomplete_results); // matching_results from jsonify
+                console.log(data.autocomplete_results);
             });
         },
         minLength: 2
