@@ -189,7 +189,7 @@ clusters = KMeans.train(ratingsPerUserData, 4, maxIterations=10,
 
 
 # # Save the clusters to a model and load it
-# clusters.save(sc, "RatingsModelPath")
+clusters.save(sc, "RatingsModelPath")
 # print type(clusters)
 # sameModel = KMeansModel.load(sc, "RatingsModelPath")
 # print type(sameModel)
