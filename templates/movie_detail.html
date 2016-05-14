@@ -3,17 +3,20 @@
 
 <h1>{{movie_title}}</h1>
 
-<h2>Total Ratings: {{num_ratings}}</h2>
+<h3>Total Ratings: {{num_ratings}}</h3>
 
-<div id="word-cloud"></div>
-<div id="time-graph">
-  <h2> Ratings Per Month</h2>
+
+  <h3> Ratings Per Month</h3>
+<div class="row">
+  <div class="col-md-6" id="word-cloud">
+  </div>
+  <div class="col-md-6" id="rating-count-chart">
+  </div>
 </div>
-<div id="rating-count-chart"></div>
 
-<div id="chart">
-</div>
+<div  id="time"></div>
 
+  <div id="chart"></div>
 <script src='/static/js/c3-0.4.11/c3.js'></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
@@ -409,7 +412,7 @@
 
   var movie_tags = {{ unique_tags|tojson }};
 
-  d3.layout.cloud().size([800, 800])
+  d3.layout.cloud().size([500, 500])
       .words(movie_tags.map(function(d) {
         return {text: d, size: 7 + Math.random() * 60};
       }))
@@ -421,8 +424,8 @@
 
   function draw(words) {
     d3.select("#word-cloud").append("svg")
-        .attr("width", 1000)
-        .attr("height", 1000)
+        .attr("width", 500)
+        .attr("height", 500)
       .append("g")
         .attr("transform", "translate(150,150)")
       .selectAll("text")
