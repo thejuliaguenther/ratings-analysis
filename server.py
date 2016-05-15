@@ -82,7 +82,7 @@ def get_autocomplete():
 
     autocomplete_results = autocomplete(query)
 
-    return jsonify(autocomplete_results=autocomplete_results)
+    return jsonify(autocomplete_results)
 
 @app.route('/movies/<letter>', methods=["GET"])
 @app.route('/movies', methods=["GET"])
