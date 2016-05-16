@@ -146,7 +146,7 @@
 $('#movie_name').autocomplete({
     serviceUrl: '/autocomplete.json',
     onSelect: function (suggestion) {
-        // alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+        alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
         console.log(suggestion);
     }
 });

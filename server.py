@@ -78,9 +78,9 @@ def display_movies():
 
 @app.route('/autocomplete.json', methods=["GET"])
 def get_autocomplete():
-    query = request.args.get('movie_name')
+    # query = request.args.get('movie_name')
 
-    autocomplete_results = autocomplete(query)
+    autocomplete_results = autocomplete('Ev')
 
     return jsonify(autocomplete_results)
 
