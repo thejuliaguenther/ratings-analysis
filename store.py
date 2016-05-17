@@ -92,18 +92,12 @@ r8 = redis.Redis(host='localhost', port=6379, db=7)
 for x in movie_json:
     movie_name = x[1]
     movie_id = x[0]
-    # prefixes = []
     for letter in xrange(len(movie_name[0:-6])):
         prefix = movie_name[0:letter]
-    #     if prefix == "":
-    #         continue
-    #     prefixes.append(prefix.encode('ascii', 'ignore'))
-    # r8.set(movie_id, prefixes)
-    # print r8.get(movie_id)
         r8.zadd('substrings',prefix,0)
     r8.zadd('substrings',movie_name+'*',0)
-# print r8.zrange('substrings',0,-1)     
-   
+ 
+
 
 
 
