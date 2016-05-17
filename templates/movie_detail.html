@@ -415,6 +415,9 @@
   exports.cloud = cloud;
 })(typeof exports === "undefined" ? d3.layout || (d3.layout = {}) : exports);
 
+var color = d3.scale.ordinal()
+        .range(["#55acee", "#2ecc71", "#e74c3c", "#9b59b6", "#e67e22", "#f1c40f", "#6FC6FF", "#48E68B", "#FF6656", "#B573D0", "#FF983C", "#FFDE29"]);
+
   var fill = d3.scale.category20();
 
   var movie_tags = {{ unique_tags|tojson }};
@@ -504,7 +507,7 @@ function renderRatingsPieChart() {
         radius = Math.min(width, height) / 2;
         
         var color = d3.scale.ordinal()
-        .range(["#B14C75", "#7C3C87", "#8CBC51", "#27C893", "#E6F769", "#D95D8F", "#53285B", "#ABE662", "#BCC957", "#359D7B", "#2EAF85"]);
+        .range(["#55acee", "#2ecc71", "#e74c3c", "#9b59b6", "#e67e22", "#f1c40f", "#6FC6FF", "#48E68B", "#FF6656", "#B573D0", "#FF983C", "#FFDE29"] );
         // .range(["#67E40F", "#0CB577", "#387BB8", "#67E40F", "#0CB577", "#387BB8", "#67E40F","#67E40F,""#67E40F"]);
 
         var div = d3.select("body").append("div") 
