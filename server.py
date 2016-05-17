@@ -19,25 +19,26 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", "GHIKLMNO")
 
 app.jinja_env.undefined = StrictUndefined
 
-def autocomplete(prefix):
-    count =10
-    results = []
-    range_length = 50 
-    start = r8.zrank('compl',prefix)    
-    if not start:
-         return results
-    while (len(results) != count):         
-         values = r8.zrange('substrings',start,start+range_length-1)         
-         start += range_length
-         if not values or len(values) == 0:
-             break
-         for item in values:
-             min_len = min(len(item),len(prefix))             
-             if item[0:min_len] != prefix[0:min_len]:                
-                count = len(results)
-                break           
-             if item[-1] == "*" and len(results) != count:                 
-                results.append(item[0:-1])
+def autocomplete(id):
+    # count =10
+    # results = []
+    # range_length = 50 
+    # start = r8.zrank('compl',prefix)    
+    # if not start:
+    #      return results
+    # while (len(results) != count):         
+    #      values = r8.zrange('substrings',start,start+range_length-1)         
+    #      start += range_length
+    #      if not values or len(values) == 0:
+    #          break
+    #      for item in values:
+    #          min_len = min(len(item),len(prefix))             
+    #          if item[0:min_len] != prefix[0:min_len]:                
+    #             count = len(results)
+    #             break           
+    #          if item[-1] == "*" and len(results) != count:                 
+    #             results.append(item[0:-1])
+    
      
     return results
 
@@ -80,7 +81,12 @@ def display_movies():
 def get_autocomplete():
     # query = request.args.get('movie_name')
 
-    autocomplete_results = autocomplete('Ev')
+    # autocomplete_results = autocomplete('Ev')
+    movie_name = request.form.get("movie_name")
+
+    #TODO Exception Handiling 
+    movie_id = r3.get(str(movie_name))
+    autocomplete_results = autocomplete(movie_id)
 
     return jsonify(autocomplete_results)
 
