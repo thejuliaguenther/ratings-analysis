@@ -19,27 +19,34 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", "GHIKLMNO")
 
 app.jinja_env.undefined = StrictUndefined
 
-def autocomplete(id):
-    # count =10
-    # results = []
-    # range_length = 50 
-    # start = r8.zrank('compl',prefix)    
-    # if not start:
-    #      return results
-    # while (len(results) != count):         
-    #      values = r8.zrange('substrings',start,start+range_length-1)         
-    #      start += range_length
-    #      if not values or len(values) == 0:
-    #          break
-    #      for item in values:
-    #          min_len = min(len(item),len(prefix))             
-    #          if item[0:min_len] != prefix[0:min_len]:                
-    #             count = len(results)
-    #             break           
-    #          if item[-1] == "*" and len(results) != count:                 
-    #             results.append(item[0:-1])
-    
-     
+def autocomplete(prefix, count=10):
+    results = []
+    range_length = 50 
+    print "START!!!!"
+    start = r8.zrank('substrings',prefix)
+    print start    
+    if not start:
+         return results
+         print "GOT TO RESULTS"
+    while (len(results) != count):    
+
+        values = r8.zrange('substrings',start,start+range_length-1) 
+        print "GOT TO VALUES"     
+        print values  
+        print len(values) 
+        start += range_length
+        if not values or len(values) == 0:
+            break
+        for i in xrange(len(values)):
+            item = values[i]
+            min_len = min(len(item),len(prefix))             
+            if item[0:min_len] != prefix[0:min_len]:                
+                count = len(results)
+                break           
+            if item[-1] == '*' and len(results) != count:                 
+                results.append(item[0:-1])
+
+    print results
     return results
 
 def get_movies_with_letter(movies_with_letter, letter):
@@ -81,14 +88,13 @@ def display_movies():
 def get_autocomplete():
     # query = request.args.get('movie_name')
 
-    # autocomplete_results = autocomplete('Ev')
-    movie_name = request.form.get("movie_name")
+    autocomplete_results = autocomplete('Ev')
+    # movie_name = request.form.get("movie_name")
 
     #TODO Exception Handiling 
-    movie_id = r3.get(str(movie_name))
-    autocomplete_results = autocomplete(movie_id)
+    # autocomplete_results = autocomplete(movie_id)
 
-    return jsonify(autocomplete_results)
+    return jsonify(data=autocomplete_results)
 
 @app.route('/movies/<letter>', methods=["GET"])
 @app.route('/movies', methods=["GET"])
