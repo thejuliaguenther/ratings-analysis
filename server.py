@@ -84,17 +84,17 @@ def display_movies():
         movie_list.append((i[0],value))
     return render_template("movie.html", movie_list=movie_list)
 
-@app.route('/autocomplete.json', methods=["GET"])
+@app.route('/autocomplete.json', methods=["POST"])
 def get_autocomplete():
-    # query = request.args.get('movie_name')
+    movie_name = request.form.get("movie_name")
 
-    autocomplete_results = autocomplete('Ev')
+    print "MOVIE NAME"
+    print movie_name
+
+    autocomplete_results = autocomplete(movie_name)
     # movie_name = request.form.get("movie_name")
 
-    #TODO Exception Handiling 
-    # autocomplete_results = autocomplete(movie_id)
-
-    return jsonify(data=autocomplete_results)
+    return jsonify(suggestions=autocomplete_results)
 
 @app.route('/movies/<letter>', methods=["GET"])
 @app.route('/movies', methods=["GET"])
