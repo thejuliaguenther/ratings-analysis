@@ -70,6 +70,8 @@ def find_movie():
     """   
     movie_name = request.form.get("movie_name")
 
+    print movie_name
+
     #TODO Exception Handiling 
     movie_id = r3.get(str(movie_name))
 

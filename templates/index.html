@@ -109,10 +109,10 @@ $('#movie_name').autocomplete({
     serviceUrl: '/autocomplete.json',
     type: 'POST',
     paramName:'movie_name',
-    onSelect: function (suggestion) {
-        alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-        console.log(suggestion.data);
-    }
+    // onSelect: function (suggestion) {
+    //     alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+    //     console.log(suggestion.data);
+    // }
 });
 
     </script>

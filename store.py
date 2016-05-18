@@ -35,9 +35,9 @@ for movie in tag_json:
 r3 = redis.StrictRedis(host='localhost', port=6379, db=2)
 
 for id in movie_json:
-    title = id[0]
-    # title = title[0:-7]
-    r3.set(str(title), str(id))
+    title = id[1]
+    id_for_title = id[0]
+    r3.set(str(title), str(id_for_title))
 
 
 r4 = redis.StrictRedis(host='localhost', port=6379, db=3)
