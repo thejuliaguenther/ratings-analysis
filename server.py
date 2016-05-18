@@ -92,7 +92,6 @@ def get_autocomplete():
     print movie_name
 
     autocomplete_results = autocomplete(movie_name)
-    # movie_name = request.form.get("movie_name")
 
     return jsonify(suggestions=autocomplete_results)
 
@@ -126,8 +125,13 @@ def show_movie_tags(movie_id):
     movie_title = r7.get(str(movie_id))
     movie_tags = r2.get(str(movie_id))
 
-    if movie_tags != []:
+    print movie_tags
+    print type(movie_tags)
+
+    if movie_tags != None :
         unique_tags = remove_duplicate_tags(movie_tags)
+    else:
+        unique_tags = ['This movie has no tags']
 
     num_ratings = r4.get(str(movie_id))
 
