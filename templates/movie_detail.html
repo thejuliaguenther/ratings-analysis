@@ -460,7 +460,6 @@ function renderTimestampGraph(){
       console.log(data.data)
       var months = ['date'];
       var counts = ['count'];
-      console.log(data.data[0]);
       for(var i=1; i < data.data.length; i++){
         months.push(data.data[i].date);
         counts.push(data.data[i].count);
@@ -513,17 +512,7 @@ function renderRatingsPieChart() {
           .attr("class", "tooltip")       
           .style("opacity", 0);
 
-        if (d.data.rating === "0.0") return color[0];
-        if (d.data.rating === "0.5") return color[1];
-        if (d.data.rating === "1.0") return color[2];
-        if (d.data.rating === "1.5") return color[3];
-        if (d.data.rating === "2.0") return color[4];
-        if (d.data.rating === "2.5") return color[5];
-        if (d.data.rating === "3.0") return color[6];
-        if (d.data.rating === "3.5") return color[7];
-        if (d.data.rating === "4.0") return color[8];
-        if (d.data.rating === "4.5") return color[9];
-        if (d.data.rating === "5.0") return color[10];
+        
 
 
         var arc = d3.svg.arc()
@@ -558,7 +547,22 @@ function renderRatingsPieChart() {
                       .attr("class", "arc");
                   g.append("path")
                       .attr("d", arc)
-                      .style("fill", function(d) { return color(d.data.count); })
+                      // .style("fill", function(d) { return color(d.data.count); })
+                      .style("fill", function(d){
+                                        if (d.data.rating == "0.0") return color(0);
+                                        if (d.data.rating == "0.5") return color(1);
+                                        if (d.data.rating == "1.0") return color(2);
+                                        if (d.data.rating == "1.5") return color(3);
+                                        if (d.data.rating == "2.0") return color(4);
+                                        if (d.data.rating == "2.5") return color(5);
+                                        if (d.data.rating == "3.0") return color(6);
+                                        if (d.data.rating == "3.5") return color(7);
+                                        if (d.data.rating == "4.0") return color(8);
+                                        if (d.data.rating == "4.5") return color(9);
+                                        if (d.data.rating == "5.0") return color(10);
+                                    })
+
+
                       .on('mouseover', tip.show)
                       .on('mouseout', tip.hide)
         });
