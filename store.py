@@ -36,7 +36,7 @@ r3 = redis.StrictRedis(host='localhost', port=6379, db=2)
 
 for id in movie_json:
     title = id[0]
-    title = title[0:-7]
+    # title = title[0:-7]
     r3.set(str(title), str(id))
 
 
