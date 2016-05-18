@@ -505,11 +505,26 @@ function renderRatingsPieChart() {
         radius = Math.min(width, height) / 2;
         
         var color = d3.scale.ordinal()
-        .range(["#55acee", "#2ecc71", "#e74c3c", "#9b59b6", "#e67e22", "#f1c40f", "#6FC6FF", "#48E68B", "#FF6656", "#B573D0", "#FF983C", "#FFDE29"] );
+        .range(["#55acee", "#2ecc71", "#e74c3c", "#9b59b6", "#e67e22", "#f1c40f", "#6FC6FF", "#48E68B", "#FF6656", "#B573D0", "#FF983C"] );
+        
+        
 
-        var div = d3.select("body").append("div") 
+        var d = d3.select("body").append("div") 
           .attr("class", "tooltip")       
           .style("opacity", 0);
+
+        if (d.data.rating === "0.0") return color[0];
+        if (d.data.rating === "0.5") return color[1];
+        if (d.data.rating === "1.0") return color[2];
+        if (d.data.rating === "1.5") return color[3];
+        if (d.data.rating === "2.0") return color[4];
+        if (d.data.rating === "2.5") return color[5];
+        if (d.data.rating === "3.0") return color[6];
+        if (d.data.rating === "3.5") return color[7];
+        if (d.data.rating === "4.0") return color[8];
+        if (d.data.rating === "4.5") return color[9];
+        if (d.data.rating === "5.0") return color[10];
+
 
         var arc = d3.svg.arc()
         .outerRadius(radius - 10)

@@ -126,7 +126,8 @@ def show_movie_tags(movie_id):
     movie_title = r7.get(str(movie_id))
     movie_tags = r2.get(str(movie_id))
 
-    unique_tags = remove_duplicate_tags(movie_tags)
+    if movie_tags != []:
+        unique_tags = remove_duplicate_tags(movie_tags)
 
     num_ratings = r4.get(str(movie_id))
 
