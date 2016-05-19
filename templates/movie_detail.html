@@ -468,7 +468,12 @@ function renderTimestampGraph(){
         data: {
           x: 'date',
           xFormat: '%Y-%m',
-          columns: [months, counts]
+          columns: [months, counts],
+          colors:{
+            months: '#FFDE29',
+            counts: '#FFDE29'
+          }
+
         },
         axis: {
           x: {

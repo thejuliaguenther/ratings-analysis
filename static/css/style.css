@@ -19,6 +19,25 @@ svg{
 #view-all{
   background-color: #e74c3c;
   border-color: #e74c3c;
+  font-size: 10px;
+  padding: 5px;
+  position: relative; 
+  top: -5px;
+  margin-left: 15px;
+}
+
+#movie_name{
+  width: 600px;
+}
+
+#search{
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+  color: white;
+  font-size: 12px;
+  padding: 10px;
+  height: 34px;
+  margin-left: 15px;
 }
 
 .letter{
@@ -27,6 +46,15 @@ svg{
   padding: 10px;
   padding-bottom: 18px;
   font-size: 8px;
+}
+
+.search-form{
+  display: inline-block;
+}
+
+.letter:hover{
+  background-color: #e74c3c;
+  border-color: #e74c3c;
 }
 
 #view-all{
