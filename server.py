@@ -53,7 +53,7 @@ def get_movies_with_letter(movies_with_letter, letter):
     movie_letter_list = movie_letter_json[letter]
 
     for i in movie_letter_list:
-        value = r1.get(str(i[0]))
+        value = r1.get(i[0].encode('ascii', 'ignore'))
         movies_with_letter.append((i[0],value))
     return movies_with_letter
 

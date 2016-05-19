@@ -84,8 +84,16 @@ for item in rating_counts_json:
 r7 = redis.StrictRedis(host='localhost', port=6379, db=6)
 
 movie_letter_data = open("movies-and-letters.json").read()
-movies__letters_to_load = movie_letter_data.encode('ascii', 'ignore')
-movie_letter_json = json.loads(movies__letters_to_load)
+movies_letters_to_load = movie_letter_data.encode('ascii', 'ignore')
+movie_letter_json = json.loads(movies_letters_to_load)
+
+# for starting_letter in movie_letter_json:
+#     movies_with_letter = []
+#     for movie_with_letter in movie_letter_json[starting_letter]:
+        
+#     r7.set(starting_letter.encode('ascii', 'ignore'), )
+
+
 
 r8 = redis.Redis(host='localhost', port=6379, db=7)
 
