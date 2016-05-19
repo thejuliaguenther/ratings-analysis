@@ -1,16 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>{{movie_title}}</h1>
+<h2 id= "movie-title">{{movie_title}}</h2>
 
-<h3>Total Ratings: {{num_ratings}}</h3>
-
-<div class="row">
+<div class="row" id="chart-row">
   <div class="col-md-6">
     <h3> All Movie Tags</h3>
   </div>
   <div class="col-md-6">
-    <h3> Total Ratings </h3>
+    <h3>Total Ratings: {{num_ratings}}</h3>
   </div>
 </div>
 <div class="row">
@@ -22,7 +20,7 @@
 
 <div  id="time"></div>
 
-<h3> Ratings Per Month</h3>
+<h3 id="ratings-heading"> Ratings Per Month</h3>
   <div id="chart"></div>
 <script src='/static/js/c3-0.4.11/c3.js'></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
@@ -33,7 +31,7 @@
 // Algorithm due to Jonathan Feinberg, http://static.mrfeinberg.com/bv_ch03.pdf
 (function(exports) {
   function cloud() {
-    var size = [500, 500],
+    var size = [700, 700],
         text = cloudText,
         font = cloudFont,
         fontSize = cloudFontSize,
@@ -241,7 +239,7 @@
     while (++di < n) {
       d = data[di];
       c.save();
-      c.font = ~~((d.size + 1) / ratio) + "px " + d.font;
+      c.font = ~~((d.size) / ratio) + "px " + d.font;
       var w = c.measureText(d.text + "m").width * ratio,
           h = d.size << 1;
       if (d.rotate) {
@@ -422,7 +420,7 @@
 
   d3.layout.cloud().size([500, 500])
       .words(movie_tags.map(function(d) {
-        return {text: d, size: 7 + Math.random() * 60};
+        return {text: d, size: 2+ Math.random() * 60};
       }))
       .rotate(function() { return ~~(Math.random() * 2) * 90; })
       .font("Lora")
@@ -442,9 +440,9 @@
         .style("font-size", function(d) { return (d.size)+ "px"; })
         .style("font-family", "Lora")
         .style("fill", function(d, i) { return fill(i); })
-        .attr("text-anchor", "middle")
+        .attr("text-anchor", "start")
         .attr("transform", function(d) {
-          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+          return "translate(" + [Math.abs(d.x), d.y] + ")rotate(" + d.rotate + ")";
         })
         .text(function(d) { return d.text; });
   }
