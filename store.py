@@ -111,7 +111,6 @@ for k in movies_genres_json:
         genre_list.append(genre.encode('ascii', 'ignore'))
 
     r9.set(str(k), genre_list)
-    print r9.get(k)
 
 
 

@@ -152,10 +152,10 @@ moviesDF.registerTempTable("movies")
 
 
 # Get the genres for each movie
-genreRows = sqlContext.sql("SELECT movieId, genres from movies")
+genreRows = sqlContext.sql("SELECT movieID, genres from movies")
 genreRowsRdd = genreRows.rdd
 
-genreRatings = genreRowsRdd.map(lambda x: (str(x.movieId), [str(x.genres)]))
+genreRatings = genreRowsRdd.map(lambda x: (str(x.movieId), [x.genres]))
 genreRatingsDict = genreRatings.collectAsMap()
 
 genreRatingsFile = open('movies-and-genres.json', 'w')
