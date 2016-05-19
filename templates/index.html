@@ -58,8 +58,7 @@
                     <li>
                         <a href="/movies">Movies</a>
                     </li>
-                    <li>
-                        <a href="/clusters">Clusters</a>
+                    <li><a>Clusters</a>
                     </li>
                 </ul>
             </div>
@@ -90,7 +89,9 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <form id="search-form" action="/find_movie", method="POST">
-                  <input type="text" class="form-control search-form" placeholder="Movie Name" aria-describedby="basic-addon1" name="movie_name" id="movie_name"><input id="search" class="btn btn-xs search-form" type="submit" value="Search">
+                    <div id="search-form-elements">
+                        <input type="text" class="form-control search-form" placeholder="Movie Name" aria-describedby="basic-addon1" name="movie_name" id="movie_name"><input id="search" class="btn btn-xs search-form" type="submit" value="Search">
+                    </div>
                   <!-- <input id="view-clusters" class="btn btn-sm" type="submit" value="View Clusters"> -->
                 </form>
             </div>

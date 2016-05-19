@@ -40,6 +40,10 @@ svg{
   margin-left: 15px;
 }
 
+#search-form-elements{
+  margin: 0 auto;
+}
+
 .letter{
   display: block;
   height: 28px;
