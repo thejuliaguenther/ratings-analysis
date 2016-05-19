@@ -25,13 +25,13 @@ ratingsDF.registerTempTable("ratings")
 
 # These lines set up a schema representing the movie data from the 
 # movies.csv file 
-# moviesSchema = StructType([ \
-#     StructField("movieId", StringType(), True), \
-#     StructField("title", StringType(), True), \
-#     StructField("genres", StringType(), True)])
+moviesSchema = StructType([ \
+    StructField("movieId", StringType(), True), \
+    StructField("title", StringType(), True), \
+    StructField("genres", StringType(), True)])
 
-# moviesDF = sqlContext.read.format('com.databricks.spark.csv').options(quote="\"").load('./ml-20m/movies.csv', schema=moviesSchema)
-# moviesDF.registerTempTable("movies")
+moviesDF = sqlContext.read.format('com.databricks.spark.csv').options(quote="\"").load('./ml-20m/movies.csv', schema=moviesSchema)
+moviesDF.registerTempTable("movies")
 
 # These lines set up a schema representing the information on the 
 # tags with which the users described movies from the tags.csv file 
@@ -151,7 +151,15 @@ ratingsDF.registerTempTable("ratings")
 
 
 
+# Get the genres for each movie
+genreRows = sqlContext.sql("SELECT movieId, genres from movies")
+genreRowsRdd = genreRows.rdd
 
+genreRatings = genreRowsRdd.map(lambda x: (str(x.movieId), [str(x.genres)]))
+genreRatingsDict = genreRatings.collectAsMap()
+
+genreRatingsFile = open('movies-and-genres.json', 'w')
+genreRatingsJSON = json.dump(genreRatingsDict, genreRatingsFile)
 
 
 
@@ -163,9 +171,9 @@ ratingsDF.registerTempTable("ratings")
 
     
 
-ratingLinesPerUser = sqlContext.sql("SELECT userId, movieId, rating FROM ratings")
-print ratingLinesPerUser
-ratingLinesPerUserRdd = ratingLinesPerUser.rdd
+# ratingLinesPerUser = sqlContext.sql("SELECT userId, movieId, rating FROM ratings")
+# print ratingLinesPerUser
+# ratingLinesPerUserRdd = ratingLinesPerUser.rdd
 
 # # Map each user to all of the movies rated by the user and the movie id of each movie
 # mappedRatingsPerUser = ratingLinesPerUserRdd.map(lambda x: (long(x.userId), [(long(x.movieId),float(x.rating))]))
@@ -180,18 +188,18 @@ ratingLinesPerUserRdd = ratingLinesPerUser.rdd
 
 # Create a numpy array of all of the user ids, movie ids, and ratings 
 # Each rating is a separate line 
-ratingsPerUserData = ratingLinesPerUserRdd.map(lambda x: np.fromstring(str(x), dtype=np.float64, sep=" "))
-# print type(ratingsPerUserData)
+# ratingsPerUserData = ratingLinesPerUserRdd.map(lambda x: np.fromstring(str(x), dtype=np.float64, sep=" "))
+# # print type(ratingsPerUserData)
 
-# # Perform the KMeans clustering algorithm on the movie ratings data
-clusters = KMeans.train(ratingsPerUserData, 4, maxIterations=10,
-        runs=10, initializationMode="random")
+# # # Perform the KMeans clustering algorithm on the movie ratings data
+# clusters = KMeans.train(ratingsPerUserData, 4, maxIterations=10,
+#         runs=10, initializationMode="random")
 
 
-# # Save the clusters to a model and load it
-clusters.save(sc, "RatingsModelPath")
-ratingsModel = KMeansModel.load(sc, "RatingsModelPath")
-print type(ratingsModel)
+# # # Save the clusters to a model and load it
+# clusters.save(sc, "RatingsModelPath")
+# ratingsModel = KMeansModel.load(sc, "RatingsModelPath")
+# print type(ratingsModel)
 
 # print type(clusters)
 # sameModel = KMeansModel.load(sc, "RatingsModelPath")
