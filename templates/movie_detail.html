@@ -454,7 +454,6 @@ renderTimestampGraph();
 function renderTimestampGraph(){
   var url = "/timestamp_counts.json/"+movie_to_graph;
    timestamp_data = $.get(url, function (data) {
-      // Since the data is sorted, we can have two separate arrays
    
       var months = ['date'];
       var counts = ['count'];
