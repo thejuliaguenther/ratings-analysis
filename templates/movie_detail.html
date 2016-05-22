@@ -3,14 +3,14 @@
 
 <h2 id= "movie-title">{{movie_title}}</h2>
 
-<div class="row" id="chart-row">
+<div class="row" >
   <div class="col-md-6">
     <h3 id="tags-heading"> All Movie Tags</h3>
   </div>
   <div class="col-md-6">
     <h3> Total Ratings: {{num_ratings}}</h3>
 </div>
-<div class="row">
+<div class="row" id="chart-row">
   <div class="col-md-6">
     <div id="word-cloud"></div>
   </div>
@@ -438,7 +438,7 @@
       .selectAll("text")
         .data(words)
       .enter().append("text")
-        .style("font-size", function(d) { return (d.size)+ "px"; })
+        .style("font-size", function(d) {return (d.size-10)+ "px"; })
         .style("font-family", "Lora")
         .style("fill", function(d, i) { return fill(i); })
         .attr("text-anchor", "start")
