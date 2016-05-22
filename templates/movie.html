@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>MOVIES</h1>
-<h2>By Title</h2>
+<h1 id="movie-heading">Movies by Title</h1>
 
     <div class="container">
   <div class="btn-toolbar">
@@ -40,20 +39,7 @@
 </div>
 <ul>
   {% for movie in movie_list %}
-   <li><a href="/movie_detail/{{movie[0]}}">{{movie[1]}}</a></li>
+   <li class="movie-titles"><a href="/movie_detail/{{movie[0]}}">{{movie[1]}}</a></li>
   {% endfor %}
-</table>
-
-<script>
-
-// $('.btn').on('click', renderMovieList);
-
-// function renderMovieList(evt){
-//     var listFirstLetter = evt.currentTarget.id;
-
-//     $.get("/movies/"+listFirstLetter, function(x){console.log(x);});
-
-// }
-// </script>
 
 {% endblock %}

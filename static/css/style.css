@@ -1,5 +1,5 @@
 svg{
-  margin-left: 50px;
+  margin: 0 auto;
 }
 
 .container{
@@ -15,6 +15,7 @@ svg{
     margin: 0px;
     margin-bottom: 50px;
 }
+
 
 #view-all{
   background-color: #e74c3c;
@@ -52,17 +53,34 @@ svg{
   font-size: 8px;
 }
 
+.movie-titles a:hover{
+  color: #e74c3c;
+}
+
 .search-form{
   display: inline-block;
 }
 
-.letter:hover{
+.letter:hover, .letter:active{
   background-color: #e74c3c;
   border-color: #e74c3c;
 }
 
-#ratings-heading{
+
+#movie-heading{
+  position: relative; 
+  top: 5px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+}
+
+h3{
+  margin-top: 20px;
   text-align: center;
+}
+
+.rating-count-chart{
+  margin: 0 auto;
 }
 
 #chart-row{

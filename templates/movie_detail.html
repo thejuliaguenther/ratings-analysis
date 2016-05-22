@@ -5,17 +5,18 @@
 
 <div class="row" id="chart-row">
   <div class="col-md-6">
-    <h3> All Movie Tags</h3>
+    <h3 id="tags-heading"> All Movie Tags</h3>
   </div>
   <div class="col-md-6">
-    <h3>Total Ratings: {{num_ratings}}</h3>
-  </div>
+    <h3> Total Ratings: {{num_ratings}}</h3>
 </div>
 <div class="row">
-  <div class="col-md-6" id="word-cloud">
+  <div class="col-md-6">
+    <div id="word-cloud"></div>
   </div>
-  <div class="col-md-6" id="rating-count-chart">
-  </div>
+  <div class="col-md-6"> 
+    <div id="rating-count-chart"></div>
+</div>
 </div>
 
 <div  id="time"></div>
@@ -456,7 +457,7 @@ function renderTimestampGraph(){
    timestamp_data = $.get(url, function (data) {
    
       var months = ['date'];
-      var counts = ['count'];
+      var counts = ['Count'];
       for(var i=1; i < data.data.length; i++){
         months.push(data.data[i].date);
         counts.push(data.data[i].count);
@@ -498,8 +499,8 @@ function renderTimestampGraph(){
 
 function renderRatingsPieChart() {
 
-        var width = 300,
-        height = 300,
+        var width = 450,
+        height = 450,
         radius = Math.min(width, height) / 2;
         
         var color = d3.scale.ordinal()
