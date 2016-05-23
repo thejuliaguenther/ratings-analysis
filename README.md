@@ -37,7 +37,8 @@ The csv files containing the data are not contained in this repo due to their si
 - Word cloud shows the unique tags that users assigned to each movie; the tags are associated with the appropriate movie id in Apache Spark
 - Pie Chart contains the breakdown of each movie rating for the movie; the chart contains tooltips that show the rating and the total count of that rating (i.e. Rating: 5.0, Count: 100)
 
-### C3.js Time-series Graph 
+### ***C3.js Time-series Graph***
+![response time series](https://cloud.githubusercontent.com/assets/13442273/15460488/61fea6c6-2066-11e6-8193-0e7460706139.png)
 - Shows the trend in movie ratings per month          
 - Tooltip shows the number of movie ratings per month 
 
