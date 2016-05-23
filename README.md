@@ -15,4 +15,12 @@ The original source of this data is the movie recommendation service [MovieLens]
 
 The ratings range from 0.0-5.0 with increments of 0.5. The tags for each movie were submitted as free-text by the users.
 
-The users represented in this data set are randomly selected users that have rated at least 20 movies and are identified only by their anonymous user id; no other information is provided. 
+The users represented in this data set are randomly selected users that have rated at least 20 movies and are identified only by their anonymous user id; no other user information is provided. 
+
+## Features
+### Data Processing in Apache Spark with Spark SQL
+### Autocomplete Search Bar 
+### Movies Arranged in Alphabetical Order
+### D3.js Word Cloud and Pie Chart with Tooltips
+### C3.js Time-series Graph 
+### Redis Storage 
