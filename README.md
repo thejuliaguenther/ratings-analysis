@@ -28,15 +28,18 @@ The csv files containing the data are not contained in this repo due to their si
 - Used [Spark CSV](https://github.com/databricks/spark-csv) to reduce engineering time spent parsing a CSV (side note: [click here](https://github.com/thejuliaguenther/csv-parser) to see a generic CSV-parser class written in Python).
 
 ### Autocomplete Search Bar 
-- 
+- Implemented autocomplete using [jQuery-Autocomplete](https://github.com/devbridge/jQuery-Autocomplete) and an AJAX call to get the appropriate JSON 
+
 ### Movies Arranged in Alphabetical Order
 - Used Redis to store all of the movie titles stored in alphabetical order, ignoring the articles "A", "An", and "The"; these movie titles link to the page showing analytics for that movie
 - Implemented buttons to view the movies starting with a certain letter
 ### D3.js Word Cloud and Pie Chart with Tooltips
 - Word cloud shows the unique tags that users assigned to each movie; the tags are associated with the appropriate movie id in Apache Spark
 - Pie Chart contains the breakdown of each movie rating for the movie; the chart contains tooltips that show the rating and the total count of that rating (i.e. Rating: 5.0, Count: 100)
+
 ### C3.js Time-series Graph 
 - Shows the trend in movie ratings per month          
 - Tooltip shows the number of movie ratings per month 
+
 ### Redis Storage 
 - This application uses Redis as a NoSQL database as it allows for fast lookup times. 
