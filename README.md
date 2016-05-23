@@ -17,10 +17,26 @@ The ratings range from 0.0-5.0 with increments of 0.5. The tags for each movie w
 
 The users represented in this data set are randomly selected users that have rated at least 20 movies and are identified only by their anonymous user id; no other user information is provided. 
 
+The csv files containing the data are not contained in this repo due to their size.
+
 ## Features
 ### Data Processing in Apache Spark with Spark SQL
+- This application uses [Apache Spark](http://spark.apache.org/) to process the 20 million line movie ratings file. 
+- Unlike Hadoop, which uses processes data on the hard disk, Spark processes data in RAM; this allows spark to process data up to 100 times faster than Hadoop MapReduce. Thus, Spark is an excellent choice for processing large amounts of data quickly. 
+- The data is organized into separate scemas for each CSV file using Spark SQL. Using Spark SQL not only facilitates the use of SQL queries to access the data but also provides information about the structure of the data that allows Spark to perform additional optimizations not included in the basic Spark RDD.
+- The dataset is static and the source of the data processed in Spark is several CSV's (movies.csv, tags.csv, ratings.csv). Therefore the Spark computations were performed once to create the JSON files necessary to seed Redis and are not performed each time the application is run, greatly improving speed.
+- Used [Spark CSV](https://github.com/databricks/spark-csv) to reduce engineering time spent parsing a CSV (side note: [click here](https://github.com/thejuliaguenther/csv-parser) to see a generic CSV-parser class written in Python).
+
 ### Autocomplete Search Bar 
+- 
 ### Movies Arranged in Alphabetical Order
+- Used Redis to store all of the movie titles stored in alphabetical order, ignoring the articles "A", "An", and "The"; these movie titles link to the page showing analytics for that movie
+- Implemented buttons to view the movies starting with a certain letter
 ### D3.js Word Cloud and Pie Chart with Tooltips
+- Word cloud shows the unique tags that users assigned to each movie; the tags are associated with the appropriate movie id in Apache Spark
+- Pie Chart contains the breakdown of each movie rating for the movie; the chart contains tooltips that show the rating and the total count of that rating (i.e. Rating: 5.0, Count: 100)
 ### C3.js Time-series Graph 
+- Shows the trend in movie ratings per month          
+- Tooltip shows the number of movie ratings per month 
 ### Redis Storage 
+- This application uses Redis as a NoSQL database as it allows for fast lookup times. 
