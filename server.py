@@ -45,8 +45,6 @@ def autocomplete(prefix, count=10):
                 break           
             if item[-1] == '*' and len(results) != count:                 
                 results.append(item[0:-1])
-
-    print results
     return results
 
 def get_movies_with_letter(movies_with_letter, letter):

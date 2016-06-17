@@ -3,7 +3,7 @@
 Ratings Analytics uses Apache Spark to process a 20 million line movie ratings file. Designed for data geeks, Ratings Analytics provides an organic user experience for viewing insights about movie ratings.
 
 ## Technical Stack 
-Apache Spark, Spark SQL, Redis, Python, Flask, JavaScript, D3.js, C3.js, Jquery, Ajax, HTML/CSS, Bootstrap
+Apache Spark, Spark SQL, Redis, Python, Flask, JavaScript, D3.js, C3.js, jQuery, Ajax, HTML/CSS, Bootstrap
 
 ## Data
 The data for this visualization comes from [grouplens.org](http://grouplens.org).

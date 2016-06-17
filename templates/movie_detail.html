@@ -429,6 +429,12 @@
       .on("end", draw)
       .start();
 
+  d3.selection.prototype.moveToFront = function() {
+  return this.each(function(){
+  this.parentNode.appendChild(this);
+  });
+};
+
   function draw(words) {
     d3.select("#word-cloud").append("svg")
         .attr("width", 500)
@@ -445,7 +451,12 @@
         .attr("transform", function(d) {
           return "translate(" + [Math.abs(d.x), d.y] + ")rotate(" + d.rotate + ")";
         })
-        .text(function(d) { return d.text; });
+        .text(function(d) { return d.text; })
+        .selectAll("text")
+        .on("mouseover",function(){
+          var selectedWord = d3.select(this);
+          selectedWord.moveToFront();
+        });
   }
 
 var movie_to_graph = {{ movie_id| tojson }};
